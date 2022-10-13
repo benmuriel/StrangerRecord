@@ -1,0 +1,79 @@
+﻿@model StrangerRecord.Models.Entity.Carte
+
+<div class="card mb-1">
+    <div class="card-header">
+        <div class="text-end float-end">
+            <button class="btn btn-outline-primary btn-sm mr-1 ">Modifier</button>
+            <button class="btn btn-outline-primary btn-sm mr-1 ">Imprimer</button>
+            <button class="btn btn-outline-primary btn-sm">Renouveler</button>
+        </div>
+        <h5 class="card-title">Carte</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4 text-center">
+                <img width="200" height="200" src="~/Content/Images/user.jpg" alt="Photo de la carte" />
+                <div class=" p-1">
+                    <button class="btn btn-outline-primary btn-sm">Captuer</button>
+                </div>
+            </div>
+            <div class="col-8">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td>Numero</td>
+                            <td class="fw-bold">@Model.numero</td>
+                        </tr>
+                        <tr>
+                            <td>Adresse de residence</td>
+                            <td class="fw-bold">
+                                Ville : @Model.Commune.ville.designation,
+                                Commune : @Model.Commune.designation
+                                @(Model.adresse_quartier != null ?", Quartier : "+ Model.adresse_quartier: " ")
+                                @(Model.adresse_avenue != null ?", Avenue : "+ Model.adresse_avenue : " ")
+                                @(Model.adresse_numero != null ?" No "+ Model.adresse_numero: " ")
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Validité </td>
+                            <td class="fw-bold">
+                                Du @(Model.date_delivrance.HasValue? Model.date_delivrance.Value.ToShortDateString(): " - " )
+                                Au @(Model.date_expiration.HasValue? Model.date_expiration.Value.ToShortDateString(): " - " )
+
+                                 @Html.Partial("_ExpirationEtat", Model.Expired) 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Passeport</td>
+                            <td class="small">
+                                Type : <span class="fw-bold">@Model.TypePasseport</span><br />
+                                Numero : <span class="fw-bold">@Model.passeport_numero </span><br />
+                                - Expiration : <span class="fw-bold">@Model.passeport_exp_date.ToShortDateString()</span>
+                                @Html.Partial("_ExpirationEtat", Model.PassePortExpired)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Visa</td>
+                            <td class="small">
+                                Type : <span class="fw-bold">@Model.TypeVisa</span><br />
+                                - Numero : <span class="fw-bold"> @Model.visa_numero</span><br />
+                                - Expiration : <span class="fw-bold"> @Model.visa_exp_date.ToShortDateString() </span>
+                                @Html.Partial("_ExpirationEtat", Model.VisaExpired)
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+               
+                <div class="small text-end">
+                    <div>Date d'enregistrement :<span class="fw-bold"> @Model.created_at.ToShortDateString() @Model.created_at.ToShortTimeString()</span> </div>
+                    <div>Centre d'identification :<span class="fw-bold"> @Model.Centre.designation</span></div>
+                    <div>Chef de centre :<span class="fw-bold"> @Model.Centre.chef_centre</span></div>
+                    <div>Encodeur :<span class="fw-bold"> @Model.Encodeur.FullName</span> </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

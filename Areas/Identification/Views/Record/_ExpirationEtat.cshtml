@@ -1,0 +1,4 @@
+﻿@model System.Boolean
+    <div class="badge float-end @(Model?"text-bg-danger":  "text-bg-success")">
+        @(Model  ? "Expiré" : "En cours")
+    </div>
