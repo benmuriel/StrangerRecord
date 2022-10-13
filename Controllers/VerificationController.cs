@@ -15,7 +15,7 @@ namespace StrangerRecord.Controllers
             List<Carte> datas = new List<Carte>();
             if(!String.IsNullOrEmpty(q) && !String.IsNullOrEmpty(type))
             {
-                datas = Service.DataProvider.FindCarteBy(type, q);
+                datas = Service.DataProvider.LoadCarteBy(type, q);
             }
             ViewBag.q = q;
             ViewBag.type = type;

@@ -23,8 +23,8 @@ namespace StrangerRecord.Models.Entity
         public DateTime created_at { get; set; }
         public DateTime? archived_at { get; set; }
       
-        public DateTime? date_delivrance { get; set; }
-        public DateTime? date_expiration { get; set; }
+        public DateTime date_delivrance { get; set; }
+        public DateTime date_expiration { get; set; }
      
         public string adresse_quartier { get; set; }
         public string adresse_avenue { get; set; }
@@ -61,7 +61,7 @@ namespace StrangerRecord.Models.Entity
         {
             get
             {
-                return this.date_expiration.HasValue && this.date_expiration.Value < DateTime.Now;
+                return  this.date_expiration < DateTime.Now;
             }
         } 
         public bool PassePortExpired
@@ -76,6 +76,14 @@ namespace StrangerRecord.Models.Entity
             get
             {
                 return this.visa_exp_date  < DateTime.Now;
+            }
+        }
+
+        public string FullAdresse
+        {
+            get
+            {
+                return this.adresse_avenue + " No " + this.adresse_numero + " / " + this.adresse_quartier + " / " + this.Commune.ToString();
             }
         }
     }

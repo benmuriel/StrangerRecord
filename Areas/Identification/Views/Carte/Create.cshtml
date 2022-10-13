@@ -1,0 +1,122 @@
+﻿@model StrangerRecord.Models.ViewModel.CarteViewModel
+@using StrangerRecord.Service;
+ 
+
+  
+@using (Html.BeginForm("Save","Carte", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id) 
+    @Html.HiddenFor(model => model.IdentificationId)
+    @Html.HiddenFor(model => model.title)
+    <div class="card mt-2">
+        <div class="card-header">  <h4>@Model.title</h4>   </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <div class="fw-bold m-2">Requerant </div>
+                    <div class="row mb-2">
+                        <label class="control-label col-md-4">Nom </label> 
+                        <div class="col-md-8">
+                           <input type="text" class="form-control" value="@ViewBag.Requerant" readonly />
+                        </div>
+                    </div> 
+                    <div class="fw-bold m-2">Carte </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.DateExpirationCarte, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.DateExpirationCarte, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                            @Html.ValidationMessageFor(model => model.DateExpirationCarte, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="fw-bold m-2">Adresse </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.AdresseCommuneId, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.AdresseCommuneId, DataProvider.CommuneByVilleFormChoiceList, new { @class = "form-select" })
+                            @Html.ValidationMessageFor(model => model.AdresseCommuneId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.AdresseQuartier, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.AdresseQuartier, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AdresseQuartier, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.AdresseAvenue, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.AdresseAvenue, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AdresseAvenue, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.AdresseNumero, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.AdresseNumero, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AdresseNumero, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col">
+                    <div class="fw-bold m-2">Passeport </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.TypePassport, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.TypePassport, DataProvider.TypePassportFormChoiceList, new { @class = "form-select" })
+                            @Html.ValidationMessageFor(model => model.TypePassport, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.NumeroPassePort, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.NumeroPassePort, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NumeroPassePort, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.DateExpirationPassePort, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.DateExpirationPassePort, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DateExpirationPassePort, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="fw-bold m-2">Visa </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.TypeVisa, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.TypeVisa, DataProvider.TypeVisaFormChoiceList, new { @class = "form-select" })
+                            @Html.ValidationMessageFor(model => model.TypeVisa, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.NumeroVisa, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.NumeroVisa, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NumeroVisa, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        @Html.LabelFor(model => model.DateExpirationVisa, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.DateExpirationVisa, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DateExpirationVisa, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end p-2">
+            <button class="btn btn-primary">Enregister</button>
+            <a href="@Url.Action("Details", "Record", new { id = Model.IdentificationId, area = "Identification" })" class="btn btn-light">Annuler</a>
+        </div>
+    </div>
+}

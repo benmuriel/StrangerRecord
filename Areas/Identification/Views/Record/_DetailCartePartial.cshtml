@@ -3,16 +3,16 @@
 <div class="card mb-1">
     <div class="card-header">
         <div class="text-end float-end">
-            <button class="btn btn-outline-primary btn-sm mr-1 ">Modifier</button>
-            <button class="btn btn-outline-primary btn-sm mr-1 ">Imprimer</button>
-            <button class="btn btn-outline-primary btn-sm">Renouveler</button>
+            <a href="@Url.Action("Edit","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>
+            <a href="@Url.Action("Create","Carte", new { id=Model.identification_id, area="Identification"})" class="btn btn-outline-primary btn-sm">Renouveler</a>
+            <a href="@Url.Action("Details","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Apperçu</a>
         </div>
         <h5 class="card-title">Carte</h5>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="col-4 text-center">
-                <img width="200" height="200" src="~/Content/Images/user.jpg" alt="Photo de la carte" />
+                @Html.Partial("_PhotoLarge", Model.Identification)
                 <div class=" p-1">
                     <button class="btn btn-outline-primary btn-sm">Captuer</button>
                 </div>
@@ -25,6 +25,15 @@
                             <td class="fw-bold">@Model.numero</td>
                         </tr>
                         <tr>
+                            <td>Validité </td>
+                            <td class="fw-bold">
+                                Du @Model.date_delivrance.ToShortDateString()
+                                Au @Model.date_expiration.ToShortDateString()
+
+                                @Html.Partial("_ExpirationEtat", Model.Expired)
+                            </td>
+                        </tr>
+                        <tr>
                             <td>Adresse de residence</td>
                             <td class="fw-bold">
                                 Ville : @Model.Commune.ville.designation,
@@ -35,15 +44,7 @@
 
                             </td>
                         </tr>
-                        <tr>
-                            <td>Validité </td>
-                            <td class="fw-bold">
-                                Du @(Model.date_delivrance.HasValue? Model.date_delivrance.Value.ToShortDateString(): " - " )
-                                Au @(Model.date_expiration.HasValue? Model.date_expiration.Value.ToShortDateString(): " - " )
 
-                                 @Html.Partial("_ExpirationEtat", Model.Expired) 
-                            </td>
-                        </tr>
                         <tr>
                             <td>Passeport</td>
                             <td>
@@ -63,10 +64,10 @@
                                     Type : <span class="fw-bold">@Model.TypeVisa</span><br />
                                     Numero : <span class="fw-bold"> @Model.visa_numero</span><br />
                                     Expiration : <span class="fw-bold"> @Model.visa_exp_date.ToShortDateString() </span>
-                                </div> 
+                                </div>
                             </td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
                

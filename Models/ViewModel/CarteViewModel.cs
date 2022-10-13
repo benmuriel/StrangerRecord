@@ -9,7 +9,9 @@ namespace StrangerRecord.Models.ViewModel
     public class CarteViewModel
     {
         [Key]
-        public string numero { get; set; }
+        public string id { get; set; } 
+        public string title { get; set; } 
+        public string IdentificationId { get; set; }
 
         [Display(Name = "Type  de Visa (*)")]
         [Required(ErrorMessage = "Le type de visa est obligatoire")]
@@ -27,8 +29,8 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du visa est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateExpirationVisa { get; set; }
+        //[DataType(DataType.Date)]
+        public string DateExpirationVisa { get; set; }
 
         [Display(Name = "Numéro (*)")]
         [Required(ErrorMessage = "Le numéro du passeport est obligatoire")]
@@ -36,15 +38,15 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du passeport est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateExpirationPassePort { get; set; }
+        //[DataType(DataType.Date)]
+        public string DateExpirationPassePort { get; set; }
 
 
         // ---------------carte -------------------------
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration de la carte est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateExpirationCarte { get; set; }
+        //[DataType(DataType.Date)]
+        public string DateExpirationCarte { get; set; }
 
         [Display(Name = "Ville / Commune  (*)")]
         [Required(ErrorMessage = "La commune de résidence est obligatoire")]

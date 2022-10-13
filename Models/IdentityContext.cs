@@ -129,8 +129,7 @@ namespace StrangerRecord.Models
                 .WithRequired(e => e.TypeVisa)
                 .HasForeignKey<int>(e => e.type_visa_id);
 
-        }
-         
+        } 
     }
 
 

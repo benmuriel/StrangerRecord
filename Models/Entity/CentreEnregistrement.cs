@@ -21,6 +21,11 @@ namespace StrangerRecord.Models.Entity
 
         public virtual ICollection<Identification> Identifications { get; set; }
         public virtual ICollection<Sejour> Sejours { get; set; }
+
+        public override string ToString()
+        {
+            return this.designation;
+        }
     }
 
 

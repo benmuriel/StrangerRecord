@@ -32,16 +32,16 @@ namespace StrangerRecord.Service
             return db.Identifications.Find(id);
         }
 
-        internal static List<Carte> FindCarteBy(string type, string q)
+        internal static List<Carte> LoadCarteBy(string type, string q)
         {
             switch (type)
             {
                 case "numpassport":
-                    return db.Cartes.Include("Identification").Where(e=>e.passeport_numero == q).Take(50).ToList();
+                    return db.Cartes.Include("Identification").Where(e => e.passeport_numero == q).Take(50).ToList();
                 case "nom":
-                    return db.Cartes.Include("Identification").Where(e=>e.Identification.nom.Contains(q) || e.Identification.postenom.Contains(q) || e.Identification.prenom.Contains(q)).Take(50).ToList();
-                case "numcarte": 
-                    return db.Cartes.Include("Identification").Where(e=>e.numero == q).Take(50).ToList(); 
+                    return db.Cartes.Include("Identification").Where(e => e.Identification.nom.Contains(q) || e.Identification.postenom.Contains(q) || e.Identification.prenom.Contains(q)).Take(50).ToList();
+                case "numcarte":
+                    return db.Cartes.Include("Identification").Where(e => e.numero == q).Take(50).ToList();
             }
             return null;
         }
@@ -56,6 +56,24 @@ namespace StrangerRecord.Service
             }
         }
 
+        internal static void SaveCarte(Carte carte)
+        {
+            if (FindCartById(carte.id) == null)
+            {
+
+                // invalider l ancienne carte
+
+                Carte ancienne = Service.DataProvider.GetLastCarte(carte.identification_id);
+                if (ancienne != null)
+                {
+                    ancienne.archived_at = DateTime.Now;
+                   
+                }
+                db.Cartes.Add(carte);
+            }
+            db.SaveChanges();
+        }
+
         public static List<SelectListItem> CommuneByVilleFormChoiceList
         {
             get
@@ -68,6 +86,11 @@ namespace StrangerRecord.Service
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
                 return listItems;
             }
+        }
+
+        public static Carte FindCartById(string id)
+        {
+            return db.Cartes.Include("Identification").Include("Commune").FirstOrDefault(d=>d.id == id);
         }
 
         public static List<SelectListItem> TypeVisaFormChoiceList

@@ -1,0 +1,50 @@
+﻿@model StrangerRecord.Models.Entity.Carte
+
+@{
+    ViewBag.Title = "Carte [Aperçu]";
+}
+ 
+
+<div class="row justify-content-center mt-3">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header"><h5>@ViewBag.Title</h5></div>
+            <div class="card-body small">
+                <div class="text-center">
+                    <div class="fw-semibold">REPUBLIQUE DEMOCRATIQUE DU CONGO</div>
+                    <div class="fw-semibold">Province  du Haut-Katanga</div>
+                </div>
+                <div class="row">
+                    <div class="col-8 fw-bold small">CARTE D'IDENTIFICATION DES ETRANGERS</div>
+                    <div class="col text-end">NO: @Model.numero</div>
+                </div>
+                <div class="row ">
+                    <div class="col-3">
+                        @Html.Partial("_PhotoSmall", Model.Identification)
+                    </div>
+                    <div class="col-9 ">
+                        <div>Nom : <strong>@Model.Identification.nom</strong></div>
+                        <div>Postnom/Prénom : <strong>@(Model.Identification.postenom != null? Model.Identification.postenom+" / " : "") @Model.Identification.prenom</strong></div>
+                        <div>Date de naissance : <strong>@Model.Identification.date_naissance.ToString("dd/MM/yyyy")</strong> </div>
+                        <div>Profession : <strong>@Model.Identification.profession</strong></div>
+                        <div>Adresse : <strong>@Model.FullAdresse</strong> </div>
+
+                        <div class="mt-2">Origine : <strong>@Model.Identification.pays_origine - @Model.Identification.ville_pays_origine</strong> </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col fw-semibold small">
+                        Lieu et date de delivrance
+                        <div class="fw-bold">
+                            @Model.Identification.Centre @Model.date_delivrance.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+                    <div class="col text-end fw-bold">@Model.Identification.Centre.chef_centre</div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center p-3">
+            <a class="btn btn-outline-primary" href="@Url.Action("Details","Record", new { id=Model.identification_id, area = "Identification"})">Retour</a>
+        </div>
+    </div>
+</div>
