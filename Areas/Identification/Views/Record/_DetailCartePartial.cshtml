@@ -46,32 +46,36 @@
                         </tr>
                         <tr>
                             <td>Passeport</td>
-                            <td class="small">
-                                Type : <span class="fw-bold">@Model.TypePasseport</span><br />
-                                Numero : <span class="fw-bold">@Model.passeport_numero </span><br />
-                                - Expiration : <span class="fw-bold">@Model.passeport_exp_date.ToShortDateString()</span>
+                            <td>
                                 @Html.Partial("_ExpirationEtat", Model.PassePortExpired)
+                                <div class="small">
+                                    Type : <span class="fw-bold">@Model.TypePasseport</span><br />
+                                    Numero : <span class="fw-bold">@Model.passeport_numero </span><br />
+                                    Expiration : <span class="fw-bold">@Model.passeport_exp_date.ToShortDateString()</span>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <td>Visa</td>
-                            <td class="small">
-                                Type : <span class="fw-bold">@Model.TypeVisa</span><br />
-                                - Numero : <span class="fw-bold"> @Model.visa_numero</span><br />
-                                - Expiration : <span class="fw-bold"> @Model.visa_exp_date.ToShortDateString() </span>
+                            <td>
                                 @Html.Partial("_ExpirationEtat", Model.VisaExpired)
+                                <div class="small">
+                                    Type : <span class="fw-bold">@Model.TypeVisa</span><br />
+                                    Numero : <span class="fw-bold"> @Model.visa_numero</span><br />
+                                    Expiration : <span class="fw-bold"> @Model.visa_exp_date.ToShortDateString() </span>
+                                </div> 
                             </td>
                         </tr>
                         
                     </tbody>
                 </table>
                
-                <div class="small text-end">
+                @*<div class="small text-end">
                     <div>Date d'enregistrement :<span class="fw-bold"> @Model.created_at.ToShortDateString() @Model.created_at.ToShortTimeString()</span> </div>
                     <div>Centre d'identification :<span class="fw-bold"> @Model.Centre.designation</span></div>
                     <div>Chef de centre :<span class="fw-bold"> @Model.Centre.chef_centre</span></div>
                     <div>Encodeur :<span class="fw-bold"> @Model.Encodeur.FullName</span> </div>
-                </div>
+                </div>*@
 
             </div>
         </div>

@@ -26,6 +26,26 @@ namespace StrangerRecord.Service
                 };
             }
         }
+
+        public static Identification FindIdentificationById(string id)
+        {
+            return db.Identifications.Find(id);
+        }
+
+        internal static List<Carte> FindCarteBy(string type, string q)
+        {
+            switch (type)
+            {
+                case "numpassport":
+                    return db.Cartes.Include("Identification").Where(e=>e.passeport_numero == q).Take(50).ToList();
+                case "nom":
+                    return db.Cartes.Include("Identification").Where(e=>e.Identification.nom.Contains(q) || e.Identification.postenom.Contains(q) || e.Identification.prenom.Contains(q)).Take(50).ToList();
+                case "numcarte": 
+                    return db.Cartes.Include("Identification").Where(e=>e.numero == q).Take(50).ToList(); 
+            }
+            return null;
+        }
+
         private static ApplicationUser CurrentUser
         {
             get
@@ -54,9 +74,9 @@ namespace StrangerRecord.Service
         {
             get
             {
-              
+
                 List<SelectListItem> listItems = new List<SelectListItem>();
-                db.TypeVisas 
+                db.TypeVisas
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
                 return listItems;
             }
@@ -65,9 +85,9 @@ namespace StrangerRecord.Service
         {
             get
             {
-              
+
                 List<SelectListItem> listItems = new List<SelectListItem>();
-                db.TypePasseports 
+                db.TypePasseports
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
                 return listItems;
             }
@@ -80,6 +100,8 @@ namespace StrangerRecord.Service
             return db.Cartes.Include("Encodeur").Include("Centre").Include("Commune").Include("TypeVisa").Include("TypePasseport")
                 .FirstOrDefault(e => e.archived_at == null && e.identification_id == identificationId);
         }
+
+
 
         public static Sejour GetLastSejour(string identificationId)
         {
@@ -106,6 +128,18 @@ namespace StrangerRecord.Service
                     return new string(Enumerable.Repeat(nums, length).Select(r => r[ran.Next(r.Length)]).ToArray());
             }
             return new string(Enumerable.Repeat(chars + nums, length).Select(r => r[ran.Next(r.Length)]).ToArray());
+        }
+
+        public static CentreEnregistrement FindCentreById(int centreId)
+        {
+            return db.CentreEnregistrements.Include("ville").FirstOrDefault(e => e.id == centreId);
+        }
+
+        internal static void SaveIdentification(Identification identification)
+        {
+            if (FindIdentificationById(identification.id) == null)
+                db.Identifications.Add(identification);
+            db.SaveChanges();
         }
 
         //public static string UniqueRamdonString(string source, string serie)

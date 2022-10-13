@@ -16,16 +16,16 @@ namespace StrangerRecord.Areas.Identification.Controllers
 {
     public class RecordController : Controller
     {
-        IdentityContext db;
+       
         public RecordController()
         {
-            db = new IdentityContext();
+           
         }
 
         // GET: Identification/Record/Details/5
         public ActionResult Details(string id)
         {
-            Models.Entity.Identification identification = db.Identifications.Find(id);
+            Models.Entity.Identification identification = Service.DataProvider.FindIdentificationById(id);
             return View(identification);
         }
 
@@ -33,7 +33,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
         // GET: Identification/Record/Details/5
         public ActionResult Edit(string id)
         {
-            Models.Entity.Identification identification = db.Identifications.Find(id);
+            Models.Entity.Identification identification = Service.DataProvider.FindIdentificationById(id);
             if (identification == null)
             {
                 return RedirectToAction("Index", "Home", new { area = "" });
@@ -61,7 +61,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
         {
             if (ModelState.IsValid)
             {
-                Models.Entity.Identification identification = db.Identifications.Find(model.id);
+                Models.Entity.Identification identification = Service.DataProvider.FindIdentificationById(id);
 
                 identification.contact_mail = model.ContactMail;
                 identification.contact_telephone = model.ContactTelephone;
@@ -74,8 +74,9 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 identification.prenom = model.prenom;
                 identification.profession = model.profession;
                 identification.ville_pays_origine = model.villeOrigine;
+               
+                Service.DataProvider.SaveIdentification(identification);
 
-                db.SaveChanges();
                 return RedirectToAction("Details", new { id = identification.id, area = "Identification" });
             }
             return View(model);
@@ -143,7 +144,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
                     // completer la date de delivrance  et la date d' expiration au moment de l impression de la carte
 
                 };
-                CentreEnregistrement centre = db.CentreEnregistrements.Include("ville").FirstOrDefault(e => e.id == user.centreId);
+                CentreEnregistrement centre = Service.DataProvider.FindCentreById(user.centreId);
                 carte.Sejours.Add(new Sejour
                 {
                     carte_id = carte.id,
@@ -158,9 +159,8 @@ namespace StrangerRecord.Areas.Identification.Controllers
                     encodeur_id = user.Id
                 });
                 identification.Cartes.Add(carte);
-                db.Identifications.Add(identification);
-
-                db.SaveChanges();
+                Service.DataProvider.SaveIdentification(identification);
+               
                 return RedirectToAction("Details", new { id = identification.id, area = "Identification" });
 
             }

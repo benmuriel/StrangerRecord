@@ -47,5 +47,11 @@ namespace StrangerRecord.Models.Entity
                 return this.date_fin.HasValue && this.date_fin.Value < DateTime.Now;
             }
         }
+
+        public override string ToString()
+        {
+            return this.destination_pays + " - " + this.destination_ville;
+
+        }
     }
 }
