@@ -5,14 +5,14 @@
 }
 
 
-
+<h4 class="m-2">@ViewBag.Title</h4>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <div> @Html.ValidationSummary(true, "", new { @class = "text-danger" })</div>
-    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.entityId) 
 
-    <div class="card mb-2">
+    <div class="card mt-2">
         <div class="card-header">  <h4>Identité</h4>   </div>
         <div class="card-body">
             <div class="row">
@@ -53,7 +53,7 @@
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.date_naissance, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.date_naissance, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.date_naissance, new { htmlAttributes = new { @class = "form-control datepickerbefore" } })
                             @Html.ValidationMessageFor(model => model.date_naissance, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.dateEntreeRdc, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.dateEntreeRdc, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.dateEntreeRdc, new { htmlAttributes = new { @class = "form-control datepickerbefore" } })
                             @Html.ValidationMessageFor(model => model.dateEntreeRdc, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -112,16 +112,16 @@
         </div>
     </div>
 
-    <div class="card mb-2">
+    <div class="card mt-2">
         <div class="card-header"><h4>Carte [Adresse + Documents]</h4></div>
         <div class="card-body">
             <div class="row">
-                <div class="col">  
+                <div class="col">
                     <div class="fw-bold m-2">Carte </div>
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.DateExpirationCarte, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.DateExpirationCarte, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DateExpirationCarte, new { htmlAttributes = new { @class = "form-control datepickerafter" } })
                             @Html.ValidationMessageFor(model => model.DateExpirationCarte, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -166,7 +166,7 @@
                             @Html.ValidationMessageFor(model => model.TypePassport, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    
+
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.NumeroPassePort, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
@@ -178,7 +178,7 @@
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.DateExpirationPassePort, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.DateExpirationPassePort, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DateExpirationPassePort, new { htmlAttributes = new { @class = "form-control datepickerafter" } })
                             @Html.ValidationMessageFor(model => model.DateExpirationPassePort, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -200,83 +200,18 @@
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.DateExpirationVisa, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.DateExpirationVisa, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.DateExpirationVisa, new { htmlAttributes = new { @class = "form-control datepickerafter" } })
                             @Html.ValidationMessageFor(model => model.DateExpirationVisa, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-
+                    </div> 
                 </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header"><h4>Séjour actuel</h4></div>
-        <div class="card-body">
-            <div class="row mb-2">
-                @Html.LabelFor(model => model.MotifSejour, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.MotifSejour, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.MotifSejour, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="row mb-2">
-                        @Html.LabelFor(model => model.DateDebutSejour, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.DateDebutSejour, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DateDebutSejour, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="row mb-2">
-                        @Html.LabelFor(model => model.DateFinSejour, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.DateFinSejour, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.DateFinSejour, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-
-
-
-            @*<div class="col">
-                <div class="fw-bold m-2">Provenance </div>
-                <div class="row mb-2">
-                    @Html.LabelFor(model => model.ProvenancePays, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.ProvenancePays, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ProvenancePays, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    @Html.LabelFor(model => model.ProvenanceVille, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.ProvenanceVille, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ProvenanceVille, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="row mb-2">
-                    @Html.LabelFor(model => model.ProvenanceAdresse, htmlAttributes: new { @class = "control-label col-md-4" })
-                    <div class="col-md-8">
-                        @Html.EditorFor(model => model.ProvenanceAdresse, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.ProvenanceAdresse, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>*@
+            </div> 
         </div>
         <div class="card-footer text-end p-2">
             <button class="btn btn-primary">Enregister</button>
-            <a href="@Url.Action("Index","Home",new { id = Model.id, area ="" })" class="btn btn-light">Annuler</a>
+            <a href="@Url.Action("Index","Home",new { id = Model.entityId, area ="" })" class="btn btn-light">Annuler</a>
         </div>
-    </div>
-    
+    </div> 
 
 }
 

@@ -30,6 +30,20 @@ namespace StrangerRecord.Areas.Identification.Controllers
             {
                 return HttpNotFound();
             }
+            TempData["currentCarteId"] = id;
+            return View(carte);
+        }
+        public ActionResult Apercu(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Carte carte = Service.DataProvider.FindCartById(id);
+            if (carte == null)
+            {
+                return HttpNotFound();
+            }
             return View(carte);
         }
 
@@ -41,10 +55,17 @@ namespace StrangerRecord.Areas.Identification.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (!Service.DataProvider.GetLastCarte(id).Expired)
+            {
+                TempData["ErrorMessage"] = "Une autre carte est en cours d'utilissation, elle sera archivée à l'enregistrement de celle-ci";
+                //return RedirectToAction("Details", "Record", new { id = id });
+            }
             CarteViewModel model = new CarteViewModel
             {
+                entityId = Guid.NewGuid().ToString(),
                 IdentificationId = entity.id,
-                DateExpirationCarte = DateTime.Today.AddYears(1).ToString("dd/MM/yyyy"), 
+                DateExpirationCarte = DateTime.Today.AddYears(1).ToString("dd/MM/yyyy"),
                 title = "Carte [Renouveler]"
             };
             //Carte current = Service.DataProvider.GetLastCarte(id);
@@ -74,7 +95,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Save(CarteViewModel model)
         {
-            Carte carte = Service.DataProvider.FindCartById(model.id);
+            Carte carte = Service.DataProvider.FindCartById(model.entityId);
 
             if (ModelState.IsValid)
             {
@@ -83,7 +104,8 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 {
                     carte = new Carte
                     {
-                        id = model.id,
+                        id = model.entityId,
+                        identification_id = model.IdentificationId,
                         numero = Service.DataProvider.GetNewCarteNumero()
                     };
                 }
@@ -93,8 +115,8 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 carte.adresse_numero = model.AdresseNumero;
                 carte.date_expiration = DateTime.ParseExact(model.DateExpirationCarte, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
-                carte.passeport_exp_date = DateTime.ParseExact(model.DateExpirationPassePort, "dd/MM/yyyy", CultureInfo.InvariantCulture); ;
-                carte.visa_exp_date = DateTime.ParseExact(model.DateExpirationVisa, "dd/MM/yyyy", CultureInfo.InvariantCulture); ;
+                carte.passeport_exp_date = DateTime.ParseExact(model.DateExpirationPassePort, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                carte.visa_exp_date = DateTime.ParseExact(model.DateExpirationVisa, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 carte.passeport_numero = model.NumeroPassePort;
                 carte.visa_numero = model.NumeroVisa;
                 carte.type_passeport_id = model.TypePassport;
@@ -103,7 +125,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 Service.DataProvider.SaveCarte(carte);
 
 
-                return RedirectToAction("Details","Record", new { id = carte.identification_id });
+                return RedirectToAction("Details", "Record", new { id = carte.identification_id });
             }
             ViewBag.Requerant = carte.Identification;
             return View("Create", model);
@@ -124,7 +146,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
 
             CarteViewModel carteViewModel = new CarteViewModel
             {
-                id = carte.id,
+                entityId = carte.id,
                 IdentificationId = carte.identification_id,
                 AdresseQuartier = carte.adresse_quartier,
                 AdresseAvenue = carte.adresse_avenue,

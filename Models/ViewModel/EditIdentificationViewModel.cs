@@ -8,7 +8,8 @@ namespace StrangerRecord.Models.ViewModel
 {
     public class EditIdentificationViewModel
     {
-        public string id { get; set; } 
+        public string entityId { get; set; } 
+        public string currentCarteId { get; set; } 
 
         [Display(Name = "Nom (*)")]
         [Required(ErrorMessage = "Le nom est obligatoire")]
@@ -26,8 +27,8 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date de naissance (*)")]
         [Required(ErrorMessage = "La date de naissance est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime date_naissance { get; set; }
+        //[DataType(DataType.Date)]
+        public string date_naissance { get; set; }
 
         [Display(Name = "Proféssion (*)")]
         [Required(ErrorMessage = "La proféssion est obligatoire")]
@@ -51,7 +52,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'entrée en RDC (*)")]
         [Required(ErrorMessage = "La date d'entrée en RDC est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime dateEntreeRdc { get; set; }
+        //[DataType(DataType.Date)]
+        public string dateEntreeRdc { get; set; }
     }
 }

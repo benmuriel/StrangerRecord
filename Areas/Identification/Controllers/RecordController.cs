@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -38,35 +39,38 @@ namespace StrangerRecord.Areas.Identification.Controllers
             {
                 return RedirectToAction("Index", "Home", new { area = "" });
             }
+            string tempcarte = TempData["currentCarteId"]?.ToString();
             return View(new EditIdentificationViewModel
             {
                 ContactMail = identification.contact_mail,
                 ContactTelephone = identification.contact_telephone,
-                dateEntreeRdc = identification.date_entree_rdc,
-                date_naissance = identification.date_naissance,
+                dateEntreeRdc = identification.date_entree_rdc.ToString("dd/MM/yyyy"),
+                date_naissance = identification.date_naissance.ToString("dd/MM/yyyy"),
                 genre = identification.genre,
-                id = identification.id,
+                entityId = identification.id,
                 nom = identification.nom,
                 paysOrigine = identification.pays_origine,
                 postenom = identification.postenom,
                 prenom = identification.prenom,
                 profession = identification.profession,
-                villeOrigine = identification.ville_pays_origine
+                villeOrigine = identification.ville_pays_origine,
+                currentCarteId = tempcarte == null ? Service.DataProvider.GetLastCarte(id).id : tempcarte
             });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id, EditIdentificationViewModel model)
+        public ActionResult Edit(string id,EditIdentificationViewModel model)
         {
             if (ModelState.IsValid)
             {
-                Models.Entity.Identification identification = Service.DataProvider.FindIdentificationById(id);
+                Models.Entity.Identification identification = Service.DataProvider.FindIdentificationById(model.entityId);
 
+                
                 identification.contact_mail = model.ContactMail;
                 identification.contact_telephone = model.ContactTelephone;
-                identification.date_entree_rdc = model.dateEntreeRdc;
-                identification.date_naissance = model.date_naissance;
+                identification.date_entree_rdc =  DateTime.ParseExact(model.dateEntreeRdc, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                identification.date_naissance =  DateTime.ParseExact(model.date_naissance, "dd/MM/yyyy", CultureInfo.InvariantCulture);
                 identification.genre = model.genre;
                 identification.nom = model.nom;
                 identification.pays_origine = model.paysOrigine;
@@ -86,7 +90,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
         // GET: Identification/Record/Create
         public ActionResult Create()
         {
-            IdentificationViewModel model = new IdentificationViewModel { DateExpirationCarte = DateTime.Today.AddYears(1) };
+            IdentificationViewModel model = new IdentificationViewModel { DateExpirationCarte = DateTime.Today.AddYears(1).ToString("dd/MM/yyyy") };
             return View(model);
         }
 
@@ -105,15 +109,15 @@ namespace StrangerRecord.Areas.Identification.Controllers
 
                 Models.Entity.Identification identification = new Models.Entity.Identification
                 {
-                    id = model.id,
+                    id = model.entityId,
                     created_at = DateTime.Now,
                     nom = model.nom,
                     postenom = model.postenom,
                     prenom = model.prenom,
-                    date_naissance = model.date_naissance,
+                    date_naissance = DateTime.ParseExact(model.date_naissance, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     genre = model.genre,
                     profession = model.profession,
-                    date_entree_rdc = model.dateEntreeRdc,
+                    date_entree_rdc =  DateTime.ParseExact(model.dateEntreeRdc, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     pays_origine = model.paysOrigine,
                     ville_pays_origine = model.villeOrigine,
                     contact_mail = model.ContactMail,
@@ -130,13 +134,13 @@ namespace StrangerRecord.Areas.Identification.Controllers
                     adresse_numero = model.AdresseNumero,
                     adresse_quartier = model.AdresseQuartier,
                     adresse_commune_id = model.AdresseCommuneId,
-                    visa_exp_date = model.DateExpirationVisa,
+                    visa_exp_date = DateTime.ParseExact(model.DateExpirationVisa, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     visa_numero = model.NumeroVisa,
                     type_visa_id = model.TypeVisa,
                     type_passeport_id = model.TypePassport,
-                    passeport_exp_date = model.DateExpirationPassePort,
+                    passeport_exp_date =  DateTime.ParseExact(model.DateExpirationPassePort, "dd/MM/yyyy", CultureInfo.InvariantCulture),
                     passeport_numero = model.NumeroPassePort,
-                    date_expiration = model.DateExpirationCarte,
+                    date_expiration =  DateTime.ParseExact(model.DateExpirationCarte, "dd/MM/yyyy", CultureInfo.InvariantCulture),
 
                     identification_id = identification.id,
                     encodeur_id = user.Id,
@@ -144,20 +148,6 @@ namespace StrangerRecord.Areas.Identification.Controllers
                     // completer la date de delivrance  et la date d' expiration au moment de l impression de la carte
 
                 };
-                CentreEnregistrement centre = Service.DataProvider.FindCentreById(user.centreId);
-                carte.Sejours.Add(new Sejour
-                {
-                    carte_id = carte.id,
-                    motif = model.MotifSejour,
-                    provenance_pays = model.paysOrigine,
-                    provenance_ville = model.villeOrigine,
-                    destination_ville = centre.ville.designation,
-                    destination_pays = "RDC",
-                    date_debut = model.DateDebutSejour,
-                    date_fin = model.DateFinSejour,
-                    centre_id = user.centreId,
-                    encodeur_id = user.Id
-                });
                 identification.Cartes.Add(carte);
                 Service.DataProvider.SaveIdentification(identification);
                

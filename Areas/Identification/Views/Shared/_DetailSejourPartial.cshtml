@@ -1,0 +1,56 @@
+﻿@model StrangerRecord.Models.Entity.Carte
+@using StrangerRecord.Service;
+
+@{ StrangerRecord.Models.Entity.Sejour lastsejour = DataProvider.GetLastSejour(Model.id); }
+<div class="card ">
+    <div class="card-header">
+        <div class="text-end float-end">
+            @if (lastsejour != null)
+            {
+                <a href="@Url.Action("Edit","Sejour", new { id=lastsejour.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>
+            }
+            @if (!Model.Archived)
+            {
+                <a href="@Url.Action("Create", "Sejour", new { id = Model.id, area = "Identification" })" class="btn btn-outline-primary btn-sm">Nouveau</a>
+            }
+        </div>
+        <h5 class="card-title">Dernier deplacement [Avec cette carte]</h5>
+    </div>
+    <div class="card-body">
+
+        @if (lastsejour != null)
+        {
+
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <td>Provenance </td>
+                        <td> <strong>@lastsejour.provenance_pays - @lastsejour.provenance_ville</strong>  @lastsejour.provenance_adresse</td>
+                    </tr>
+                    <tr>
+                        <td>Destination (Localisation atuelle) </td>
+                        <td><strong> @lastsejour.destination_pays - @lastsejour.destination_ville</strong>   @lastsejour.destination_adresse</td>
+                    </tr>
+                    <tr>
+                        <td>Motif </td>
+                        <td class="fw-bold"> @lastsejour.motif</td>
+                    </tr>
+                    <tr>
+                        <td>Période </td>
+                        <td class="fw-bold">
+                            Du @lastsejour.date_debut.ToShortDateString()
+                            @(lastsejour.date_fin.HasValue ? "Au "+ lastsejour.date_fin.Value.ToShortDateString(): " - " )
+
+                            @Html.Partial("_ExpirationEtat", lastsejour.Expired)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="m-3 text-danger text-center">Aucun dernier deplacement enregistré</p>
+        }
+
+    </div>
+</div>

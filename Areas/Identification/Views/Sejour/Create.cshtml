@@ -1,0 +1,113 @@
+﻿@model StrangerRecord.Models.ViewModel.SejourViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+  
+@using (Html.BeginForm("Save", "Sejour", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.entityId) 
+    @Html.HiddenFor(model => model.carteId)
+    @Html.HiddenFor(model => model.title)
+<div class="card mt-3">
+    <div class="card-header"> <h4>@Model.title</h4> </div>
+    <div class="card-body">
+        <div class="fw-bold m-2">Requerant </div>
+        <div class="row mb-2">
+            <label class="control-label col-md-2">Nom </label>
+            <div class="col-md-10">
+                <input type="text" class="form-control" value="@ViewBag.Requerant" readonly />
+            </div>
+        </div>
+
+        <div class="row mb-2">
+            <div class="col">
+                <div class="fw-bold m-2">Provenance </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.ProvenancePays, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ProvenancePays, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProvenancePays, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.ProvenanceVille, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ProvenanceVille, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProvenanceVille, "", new { @class = "text-danger" })
+                    </div>
+                </div> <div class="row mb-2">
+                    @Html.LabelFor(model => model.ProvenanceAdresse, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.ProvenanceAdresse, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ProvenanceAdresse, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="fw-bold m-2">Destination </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.DestinationPays, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DestinationPays, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DestinationPays, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.DestinationVille, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DestinationVille, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DestinationVille, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.DestinatiomAdresse, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DestinatiomAdresse, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DestinatiomAdresse, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            @Html.LabelFor(model => model.MotifSejour, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MotifSejour, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MotifSejour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="fw-bold m-2">Durée </div>
+        <div class="row">
+            <div class="col">
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.DateDebutSejour, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DateDebutSejour, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                        @Html.ValidationMessageFor(model => model.DateDebutSejour, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row mb-2">
+                    @Html.LabelFor(model => model.DateFinSejour, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.DateFinSejour, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                        @Html.ValidationMessageFor(model => model.DateFinSejour, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-end p-2">
+        <button class="btn btn-primary">Enregister</button>
+        <a href="@Url.Action("Details", "Carte", new { id = Model.carteId, area = "Identification" })" class="btn btn-light">Annuler</a>
+    </div>
+</div>
+
+}

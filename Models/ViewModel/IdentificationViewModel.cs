@@ -6,7 +6,8 @@ namespace StrangerRecord.Models.ViewModel
     public class IdentificationViewModel
     {
 
-        public string id { get; set; } = Guid.NewGuid().ToString();
+        public string entityId { get; set; } = Guid.NewGuid().ToString();
+        public string currentCarteId { get; set; } 
 
         [Display(Name = "Nom (*)")]
         [Required(ErrorMessage = "Le nom est obligatoire")]
@@ -24,8 +25,8 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date de naissance (*)")]
         [Required(ErrorMessage = "La date de naissance est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime date_naissance { get; set; }
+        //[DataType(DataType.Date)]
+        public string date_naissance { get; set; }
 
         [Display(Name = "Proféssion (*)")]
         [Required(ErrorMessage = "La proféssion est obligatoire")]
@@ -49,8 +50,9 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'entrée en RDC (*)")]
         [Required(ErrorMessage = "La date d'entrée en RDC est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime dateEntreeRdc { get; set; }
+        //[RegularExpression("^([0-2][0-9]|(3)[0-1])(/)(((0)[0-9])|((1)[0-2]))(/)d{4}$",ErrorMessage ="Date non valide")]
+        //[DataType(DataType.Date)]
+        public string dateEntreeRdc { get; set; }
 
 
 
@@ -72,8 +74,8 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du visa est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateExpirationVisa { get; set; }
+        //[DataType(DataType.Date)]
+        public string DateExpirationVisa { get; set; }
 
         [Display(Name = "Numéro (*)")]
         [Required(ErrorMessage = "Le numéro du passeport est obligatoire")]
@@ -81,53 +83,21 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du passeport est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateExpirationPassePort { get; set; }
+        //[DataType(DataType.Date)]
+        public string DateExpirationPassePort { get; set; }
 
 
         // --------------- sejour ---------------------
 
 
 
-        [Display(Name = "Motif du sejour (*)")]
-        [Required(ErrorMessage = "Le motif du sejour est obligatoire")]
-        public string MotifSejour { get; set; }
-
-
-        //[Display(Name = "Pays de provenance (*)")]
-        //[Required(ErrorMessage = "Le pays de provenance est obligatoire")]
-        //public string ProvenancePays { get; set; }
-
-
-        //[Display(Name = "Ville de provenance (*)")]
-        //[Required(ErrorMessage = "La ville de provenance est obligatoire")]
-        //public string ProvenanceVille { get; set; }
-
-        //[Display(Name = "Adresse ")]
-        //public string ProvenanceAdresse { get; set; }
-
-
-        //[Display(Name = "Durée du sejour (*)")]
-        //[Required(ErrorMessage = "La durée du sejour est obligatoire")]
-        //public int SejourDuree { get; set; }
-
-
-        [Display(Name = "A partir du (*)")]
-        [Required(ErrorMessage = "La date de debut du sejour est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateDebutSejour { get; set; }
-
-
-        [Display(Name = "Jusqu'au ")]
-        [DataType(DataType.Date)]
-        public DateTime? DateFinSejour { get; set; }
-
+       
 
         //--------------- carte ---------------------
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration de la carte est obligatoire")]
-        [DataType(DataType.Date)]
-        public DateTime DateExpirationCarte { get; set; }
+        //[DataType(DataType.Date)]
+        public string DateExpirationCarte { get; set; }
 
         [Display(Name = "Ville / Commune  (*)")]
         [Required(ErrorMessage = "La commune de résidence est obligatoire")]

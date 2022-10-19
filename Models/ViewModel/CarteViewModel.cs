@@ -9,7 +9,7 @@ namespace StrangerRecord.Models.ViewModel
     public class CarteViewModel
     {
         [Key]
-        public string id { get; set; } 
+        public string entityId { get; set; } 
         public string title { get; set; } 
         public string IdentificationId { get; set; }
 

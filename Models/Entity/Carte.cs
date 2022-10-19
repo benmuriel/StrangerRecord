@@ -13,7 +13,7 @@ namespace StrangerRecord.Models.Entity
     {
         public Carte()
         {
-            this.id =   Guid.NewGuid().ToString();
+            this.id = Guid.NewGuid().ToString();
             this.created_at = DateTime.Now;
             Sejours = new HashSet<Sejour>();
         }
@@ -57,6 +57,13 @@ namespace StrangerRecord.Models.Entity
 
         public virtual ICollection<Sejour> Sejours { get; set; }
 
+        public bool Archived
+        {
+            get
+            {
+                return  this.archived_at < DateTime.Now;
+            }
+        } 
         public bool Expired
         {
             get

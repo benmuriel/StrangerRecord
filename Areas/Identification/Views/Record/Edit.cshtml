@@ -9,7 +9,8 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.id)
+    @Html.HiddenFor(model => model.entityId)
+    @Html.HiddenFor(model => model.currentCarteId)
 
     <div class="card mb-2">
         <div class="card-header">  <h4>@ViewBag.Title</h4>   </div>
@@ -52,7 +53,7 @@
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.date_naissance, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.date_naissance, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.date_naissance, new { htmlAttributes = new { @class = "form-control datepicker" } })
                             @Html.ValidationMessageFor(model => model.date_naissance, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -86,7 +87,7 @@
                     <div class="row mb-2">
                         @Html.LabelFor(model => model.dateEntreeRdc, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.EditorFor(model => model.dateEntreeRdc, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.dateEntreeRdc, new { htmlAttributes = new { @class = "form-control datepicker" } })
                             @Html.ValidationMessageFor(model => model.dateEntreeRdc, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -111,7 +112,7 @@
         </div>
         <div class="card-footer text-end p-2">
             <button class="btn btn-primary">Enregister</button>
-            <a href="@Url.Action("Details","Record",new { id = Model.id, area ="Identification" })" class="btn btn-light">Annuler</a>
+            <a href="@Url.Action("Details","Carte",new { id = Model.currentCarteId, area ="Identification" })" class="btn btn-light">Annuler</a>
         </div>
     </div>
 }

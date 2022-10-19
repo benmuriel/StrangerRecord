@@ -13,7 +13,7 @@ namespace StrangerRecord.Models.Entity
         public Sejour()
         {
             this.id = Guid.NewGuid().ToString();
-            this.created_at = DateTime.Now; 
+            this.created_at = DateTime.Now;
         }
         [Key]
         public string id { get; set; }
@@ -27,15 +27,16 @@ namespace StrangerRecord.Models.Entity
         public string destination_adresse { get; set; }
         public string provenance_ville { get; set; }
         public string provenance_pays { get; set; }
+        public string provenance_adresse { get; set; }
 
 
 
-        public string carte_id { get; set; }  
+        public string carte_id { get; set; }
         public string encodeur_id { get; set; }
         public int centre_id { get; set; }
 
 
-        public Carte Carte { get; set; } 
+        public Carte Carte { get; set; }
         public ApplicationUser Encodeur { get; set; }
         public CentreEnregistrement Centre { get; set; }
 

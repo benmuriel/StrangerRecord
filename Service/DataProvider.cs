@@ -34,16 +34,24 @@ namespace StrangerRecord.Service
 
         internal static List<Carte> LoadCarteBy(string type, string q)
         {
+            q = q.Trim().ToLower();
             switch (type)
             {
                 case "numpassport":
-                    return db.Cartes.Include("Identification").Where(e => e.passeport_numero == q).Take(50).ToList();
+                    return db.Cartes.Include("Identification").Where(e => e.passeport_numero.Trim().ToLower() == q).OrderByDescending(e => e.created_at).Take(50).ToList();
                 case "nom":
-                    return db.Cartes.Include("Identification").Where(e => e.Identification.nom.Contains(q) || e.Identification.postenom.Contains(q) || e.Identification.prenom.Contains(q)).Take(50).ToList();
+                    return db.Cartes.Include("Identification")
+                        .Where(e => e.Identification.nom.Contains(q) || e.Identification.postenom.Trim().ToLower().Contains(q) || e.Identification.prenom.Trim().ToLower().Contains(q))
+                        .OrderByDescending(e => e.created_at).Take(50).ToList();
                 case "numcarte":
-                    return db.Cartes.Include("Identification").Where(e => e.numero == q).Take(50).ToList();
+                    return db.Cartes.Include("Identification").Where(e => e.numero.Trim().ToLower() == q).OrderByDescending(e=>e.created_at).Take(50).ToList();
             }
             return null;
+        }
+
+        internal static Sejour FindSejourById(string id)
+        {
+            return db.Sejours.Include("Carte").FirstOrDefault(d => d.id == id);
         }
 
         private static ApplicationUser CurrentUser
@@ -66,9 +74,11 @@ namespace StrangerRecord.Service
                 Carte ancienne = Service.DataProvider.GetLastCarte(carte.identification_id);
                 if (ancienne != null)
                 {
-                    ancienne.archived_at = DateTime.Now;
-                   
+                    ancienne.archived_at = DateTime.Now; 
                 }
+                carte.date_delivrance = DateTime.Today;
+                carte.encodeur_id = CurrentUser.Id;
+                carte.centre_id = CurrentUser.centreId;
                 db.Cartes.Add(carte);
             }
             db.SaveChanges();
@@ -86,6 +96,24 @@ namespace StrangerRecord.Service
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
                 return listItems;
             }
+        }
+
+        internal static void SaveSejour(Sejour sejour)
+        {
+            if (FindSejourById(sejour.id) == null)
+            { 
+                // invalider l ancienne carte
+
+                Sejour ancienne = Service.DataProvider.GetLastSejour(sejour.carte_id);
+                if (ancienne != null)
+                {
+                    ancienne.archived_at = DateTime.Now;
+                } 
+                sejour.encodeur_id = CurrentUser.Id;
+                sejour.centre_id = CurrentUser.centreId;
+                db.Sejours.Add(sejour);
+            }
+            db.SaveChanges();
         }
 
         public static Carte FindCartById(string id)
@@ -126,11 +154,11 @@ namespace StrangerRecord.Service
 
 
 
-        public static Sejour GetLastSejour(string identificationId)
+        public static Sejour GetLastSejour(string carteid)
         {
             db = new IdentityContext();
-            return db.Sejours.Include("Encodeur").Include("Centre").Include("Carte")
-                .FirstOrDefault(e => e.archived_at == null && e.Carte.identification_id == identificationId);
+            return db.Sejours.Include("Encodeur").Include("Centre").Include("Carte").OrderByDescending(e=>e.created_at)
+                .FirstOrDefault(e =>  e.carte_id == carteid);
         }
 
         public static string GetNewCarteNumero()

@@ -1,11 +1,17 @@
 ﻿@model StrangerRecord.Models.Entity.Carte
-
+@using StrangerRecord.Service 
 <div class="card mb-1">
     <div class="card-header">
         <div class="text-end float-end">
-            <a href="@Url.Action("Edit","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>
-            <a href="@Url.Action("Create","Carte", new { id=Model.identification_id, area="Identification"})" class="btn btn-outline-primary btn-sm">Renouveler</a>
-            <a href="@Url.Action("Details","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Apperçu</a>
+            <a href="@Url.Action("Apercu","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Apperçu</a>
+            @if (!Model.Archived)
+            {
+                <a href="@Url.Action("Edit","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>
+            }
+            @if (Model == DataProvider.GetLastCarte(Model.identification_id))
+            {
+                <a href="@Url.Action("Create","Carte", new { id= Model.identification_id, area="Identification"})" class="btn btn-outline-primary btn-sm">Renouveler</a>
+            }
         </div>
         <h5 class="card-title">Carte</h5>
     </div>
@@ -30,7 +36,8 @@
                                 Du @Model.date_delivrance.ToShortDateString()
                                 Au @Model.date_expiration.ToShortDateString()
 
-                                @Html.Partial("_ExpirationEtat", Model.Expired)
+                                @Html.Partial("_ArchiveEtat", Model.Archived)
+                                @if (!Model.Archived) { Html.Partial("_ExpirationEtat", Model.Expired); }
                             </td>
                         </tr>
                         <tr>
@@ -66,8 +73,7 @@
                                     Expiration : <span class="fw-bold"> @Model.visa_exp_date.ToShortDateString() </span>
                                 </div>
                             </td>
-                        </tr>
-
+                        </tr> 
                     </tbody>
                 </table>
                

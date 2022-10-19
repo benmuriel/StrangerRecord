@@ -4,12 +4,15 @@
     ViewBag.Title = "Verification";
 }
 
-<div class="p-5">
-    <h2>@ViewBag.Title</h2>
+<div class="p-3">
+    <h4>@ViewBag.Title</h4>
 
     @using (Html.BeginForm("Index", "Verification", FormMethod.Get))
     {
         <div class="row justify-content-center mt-3">
+            <div class="col-1">
+                <a class="m-2" href="@Url.Action("Index","Home")">Accuiel</a>
+            </div>
             <div class="col-5">
                 <input name="q" value="@ViewBag.q" type="text" class="form-control" placeholder="Verifier" />
             </div>
@@ -32,43 +35,53 @@
     @if (Model.Count() > 0)
     {
 
-<div class="mt-3">
-    <div class="m-3"> @Model.Count() resultat(s)</div>
-    <div class="small m-2 text-center">Cette verification est limitée à 50 resultats. Si vous voulez consulter plus de données, référez-vous au module de <strong>Rapport de fréquentation</strong>.</div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Numero de la carte</th>
-                <th>Detenteur</th>
-                <th>Pays d'origine</th>
-                <th>Passeport</th>
-                <th>Sejour en cours</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ int i = 0;}
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@{i++; } @i </td>
-                    <td>
-                        @item.numero    @Html.Partial("_ExpirationEtat", item.Expired)  
-                    </td>
-                    <td>@item.Identification.ToString()</td>
-                    <td>@item.Identification.pays_origine</td>
-                    <td>@item.passeport_numero     @Html.Partial("_ExpirationEtat", item.PassePortExpired) </td>
-                    @{ var sejour = DataProvider.GetLastSejour(item.identification_id); }
-                    <td>@sejour.ToString()  @Html.Partial("_ExpirationEtat", sejour.Expired) </td>
-                    <td>
-                        <a href="@Url.Action("Details","Record", new { id = item.identification_id, area="Identification" })" class="btn btn-sm btn-outline-primary">Details &raquo;</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        <div class="mt-3">
+            <div class="m-3"> @Model.Count() resultat(s)</div>
+            <div class="small m-2 text-center">Cette verification est limitée à 50 resultats. Si vous voulez consulter plus de données, référez-vous au module de <strong>Rapport de fréquentation</strong>.</div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Numero de la carte</th>
+                        <th>Detenteur</th>
+                        <th>Pays d'origine</th>
+                        <th>Passeport</th>
+                        <th>Dernier Deplacement </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0;}
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@{i++; } @i </td>
+                            <td>
+                                <strong> @item.numero</strong>   @Html.Partial("_ArchiveEtat", item.Archived)
+                                @if (!item.Archived) { Html.Partial("_ExpirationEtat", item.Expired); }
+                                 <div title="Date de delivrance" class="small">Del : @item.date_delivrance.ToString("dd/MM/yyyy")</div>
+                            </td>
+                            <td>@item.Identification.ToString()  </td>
+                            <td>@item.Identification.pays_origine - @item.Identification.ville_pays_origine</td>
+                            <td>
+                                <strong> @item.passeport_numero  </strong>   @Html.Partial("_ExpirationEtat", item.PassePortExpired)
+                                <div title="Date d'expiration" class="small">Exp : @item.passeport_exp_date.ToString("dd/MM/yyyy")</div>
+                            </td>
+                            @{ var sejour = DataProvider.GetLastSejour(item.identification_id); }
+                            <td>
+                                @if (sejour != null)
+                                {
+                                    @sejour.ToString() @Html.Partial("_ExpirationEtat", sejour.Expired)
+                                } 
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Details","Carte", new { id = item.id, area="Identification" })" class="btn btn-sm btn-outline-primary">Details &raquo;</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 
 
