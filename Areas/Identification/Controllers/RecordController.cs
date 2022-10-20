@@ -54,13 +54,13 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 prenom = identification.prenom,
                 profession = identification.profession,
                 villeOrigine = identification.ville_pays_origine,
-                currentCarteId = tempcarte == null ? Service.DataProvider.GetLastCarte(id).id : tempcarte
+                currentCarteId = tempcarte ?? Service.DataProvider.GetLastCarte(id).id
             });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(string id,EditIdentificationViewModel model)
+        public ActionResult Edit(EditIdentificationViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
                
                 Service.DataProvider.SaveIdentification(identification);
 
-                return RedirectToAction("Details", new { id = identification.id, area = "Identification" });
+                return RedirectToAction("Details", new { identification.id, area = "Identification" });
             }
             return View(model);
         }
@@ -151,7 +151,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 identification.Cartes.Add(carte);
                 Service.DataProvider.SaveIdentification(identification);
                
-                return RedirectToAction("Details", new { id = identification.id, area = "Identification" });
+                return RedirectToAction("Details", new { identification.id, area = "Identification" });
 
             }
 

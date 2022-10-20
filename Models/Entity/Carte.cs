@@ -36,6 +36,9 @@ namespace StrangerRecord.Models.Entity
         public DateTime passeport_exp_date { get; set; }
 
 
+        public byte[] picture { get; set; }
+
+        public string picture_format { get; set; }
 
 
         public int adresse_commune_id { get; set; }
@@ -91,6 +94,14 @@ namespace StrangerRecord.Models.Entity
             get
             {
                 return this.adresse_avenue + " No " + this.adresse_numero + " / " + this.adresse_quartier + " / " + this.Commune.ToString();
+            }
+        }
+
+        public string PictureString
+        {
+            get
+            {
+                return this.picture != null ? Convert.ToBase64String(this.picture) : null;
             }
         }
     }

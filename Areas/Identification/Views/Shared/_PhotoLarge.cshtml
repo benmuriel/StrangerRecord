@@ -1,0 +1,9 @@
+﻿@model StrangerRecord.Models.ViewModel.DisplayPhotoViewModel
+@if (Model.Picture != null)
+{
+    <img  width="200" height="200" src="data:@Model.PictureFormat;base64,@Model.Picture"  alt="Photo de la carte">
+}
+else
+{
+    <img width="200" height="200" src="~/Content/Images/user.jpg" alt="Photo de la carte" />
+}

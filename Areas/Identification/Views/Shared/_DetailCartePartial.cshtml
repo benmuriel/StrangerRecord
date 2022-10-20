@@ -1,5 +1,6 @@
 ﻿@model StrangerRecord.Models.Entity.Carte
 @using StrangerRecord.Service 
+@using StrangerRecord.Models.ViewModel;
 <div class="card mb-1">
     <div class="card-header">
         <div class="text-end float-end">
@@ -18,9 +19,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col-4 text-center">
-                @Html.Partial("_PhotoLarge", Model.Identification)
+                @Html.Partial("_PhotoLarge", new DisplayPhotoViewModel { Picture = Model.PictureString, PictureFormat = Model.picture_format  } )
                 <div class=" p-1">
-                    <button class="btn btn-outline-primary btn-sm">Captuer</button>
+                    <a href="@Url.Action("UploadPicture","Carte", new { id=Model.id, area ="Identification" })" class="btn btn-outline-primary btn-sm">Envoyer</a>
+                    <a href="@Url.Action("UploadPicture","Carte", new { id=Model.id, area ="Identification" })" class="btn btn-outline-primary btn-sm">Captuer</a>
                 </div>
             </div>
             <div class="col-8">

@@ -1,0 +1,31 @@
+﻿@model StrangerRecord.Models.ViewModel.UploadPictureViewModel
+
+
+
+@using (Html.BeginForm("UploadPicture", "Carte",new { area = "Identification" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.carteId)
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Uploader une photo</h5>
+                </div>
+                <div class="card-body">
+                   @* @Html.EditorFor(model => model.Picture, new { htmlAttributes = new { @type="file", @class = "form-control", accept = "image/*" } })*@
+
+                      <input type="file" id="Picture" name="Picture" accept="image/*" />
+                    <div>
+                        @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Envoyer</button>
+                    <a class="btn btn-outline-primary" href="@Url.Action("Details","Carte", new { id=Model.carteId, area = "Identification"})">Retour</a>
+                </div>
+            </div> 
+        </div>
+    </div> 
+}

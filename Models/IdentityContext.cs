@@ -25,6 +25,8 @@ namespace StrangerRecord.Models
         public virtual ICollection<Identification> Identifications { get; set; }
         public int centreId { get; set; }
         public string FullName { get; set; }
+
+    
     }
 
 

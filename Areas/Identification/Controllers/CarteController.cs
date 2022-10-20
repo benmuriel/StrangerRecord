@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -44,7 +45,40 @@ namespace StrangerRecord.Areas.Identification.Controllers
             {
                 return HttpNotFound();
             }
+
+
             return View(carte);
+        }
+
+        public ActionResult UploadPicture(string id)
+        {
+            Carte carte = Service.DataProvider.FindCartById(id);
+            if (carte == null)
+            {
+                return HttpNotFound();
+            }
+            return View(new UploadPictureViewModel { carteId = carte.id,  });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadPicture(string id,UploadPictureViewModel model)
+        {
+            //if (ModelState.IsValid)
+            //{
+                Carte carte = Service.DataProvider.FindCartById(model.carteId);
+                if (carte == null)
+                {
+                    return HttpNotFound();
+                }
+                carte.picture_format = model.Picture.ContentType;
+                var uploadedFiile = new byte[model.Picture.InputStream.Length];
+                model.Picture.InputStream.Read(uploadedFiile, 0, uploadedFiile.Length); 
+                carte.picture = uploadedFiile;
+                Service.DataProvider.SaveCarte(carte);
+                return RedirectToAction("Details", "Carte", new { area = "Identification", id = carte.id });
+            //}
+            //return View(model);
         }
 
         // GET: Identification/Carte/Create
@@ -98,8 +132,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
             Carte carte = Service.DataProvider.FindCartById(model.entityId);
 
             if (ModelState.IsValid)
-            {
-
+            { 
                 if (carte == null)
                 {
                     carte = new Carte
@@ -122,10 +155,8 @@ namespace StrangerRecord.Areas.Identification.Controllers
                 carte.type_passeport_id = model.TypePassport;
                 carte.type_visa_id = model.TypeVisa;
 
-                Service.DataProvider.SaveCarte(carte);
-
-
-                return RedirectToAction("Details", "Record", new { id = carte.identification_id });
+                Service.DataProvider.SaveCarte(carte); 
+                return RedirectToAction("Details", "Carte", new { area="Identification", id = carte.id });
             }
             ViewBag.Requerant = carte.Identification;
             return View("Create", model);
