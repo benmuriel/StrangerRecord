@@ -8,6 +8,7 @@ namespace StrangerRecord.Models.ViewModel
 {
     public class UploadPictureViewModel
     {
+        public string Name { get; set; }
         [Required]
         public string carteId { get; set; }
 

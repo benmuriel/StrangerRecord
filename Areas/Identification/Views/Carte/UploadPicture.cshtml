@@ -13,9 +13,19 @@
                     <h5 class="card-title">Uploader une photo</h5>
                 </div>
                 <div class="card-body">
-                   @* @Html.EditorFor(model => model.Picture, new { htmlAttributes = new { @type="file", @class = "form-control", accept = "image/*" } })*@
-
-                      <input type="file" id="Picture" name="Picture" accept="image/*" />
+                    @* @Html.EditorFor(model => model.Picture, new { htmlAttributes = new { @type="file", @class = "form-control", accept = "image/*" } })*@
+                    <div class="row mb-2">
+                        <label class="control-label col-md-4">Nom </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" value="@Model.Name" readonly />
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <label class="control-label col-md-4">Photo </label>
+                        <div class="col-md-8">
+                            <input type="file" id="Picture" name="Picture" accept="image/*" />
+                        </div>
+                    </div>
                     <div>
                         @Html.ValidationMessageFor(model => model.Picture, "", new { @class = "text-danger" })
 

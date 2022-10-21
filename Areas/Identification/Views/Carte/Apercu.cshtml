@@ -1,15 +1,16 @@
 ﻿@model StrangerRecord.Models.Entity.Carte
 
+@using StrangerRecord.Models.ViewModel;
 @{
     ViewBag.Title = "Carte [Aperçu]";
 }
- 
 
+<span class="d-none" id="filename">@Model.numero - @Model.Identification.ToString()</span>
 <div class="row justify-content-center mt-3">
     <div class="col-md-5">
         <div class="card">
             <div class="card-header"><h5>@ViewBag.Title</h5></div>
-            <div class="card-body small">
+            <div class="card-body small" id="carte" style="background-color:white">
                 <div class="text-center">
                     <div class="fw-semibold">REPUBLIQUE DEMOCRATIQUE DU CONGO</div>
                     <div class="fw-semibold">Province  du Haut-Katanga</div>
@@ -20,7 +21,7 @@
                 </div>
                 <div class="row ">
                     <div class="col-3">
-                        @Html.Partial("_PhotoSmall", Model.Identification)
+                        @Html.Partial("_PhotoSmall", new DisplayPhotoViewModel { Picture = Model.PictureString, PictureFormat = Model.picture_format })
                     </div>
                     <div class="col-9 ">
                         <div>Nom : <strong>@Model.Identification.nom</strong></div>
@@ -45,6 +46,26 @@
         </div>
         <div class="text-center p-3">
             <a class="btn btn-outline-primary" href="@Url.Action("Details","Carte", new { id=Model.id, area = "Identification"})">Retour</a>
+            <button class="btn btn-outline-primary" onclick="downloadcarte()">Telecharger</button>
         </div>
     </div>
 </div>
+@section scripts{
+    <script type="text/javascript">
+        function downloadcarte() {
+            //domtoimage.toBlob(document.getElementById('carte'))
+            //    .then(function (blob) {
+            //        window.saveAs(blob, 'my-node.png');
+            //    });
+
+            domtoimage.toJpeg(document.getElementById('carte'), { quality: 0.99 })
+                .then(function (dataUrl) {
+                    var link = document.createElement('a');
+                    var filename = document.getElementById('filename').innerText
+                    link.download = filename + '.jpeg';
+                    link.href = dataUrl;
+                    link.click();
+                });
+        }
+    </script>
+}

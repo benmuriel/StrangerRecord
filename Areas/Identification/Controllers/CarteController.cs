@@ -57,7 +57,7 @@ namespace StrangerRecord.Areas.Identification.Controllers
             {
                 return HttpNotFound();
             }
-            return View(new UploadPictureViewModel { carteId = carte.id,  });
+            return View(new UploadPictureViewModel { carteId = carte.id,  Name = carte.Identification.ToString() });
         }
 
         [HttpPost]
