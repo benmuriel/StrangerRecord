@@ -1,9 +1,9 @@
 ﻿@model StrangerRecord.Models.ViewModel.DisplayPhotoViewModel
 @if (Model.Picture != null)
 {
-    <img width="100" height="120" src="data:@Model.PictureFormat;base64,@Model.Picture" alt="Photo de la carte">
+    <img width="75" height="90" src="data:@Model.PictureFormat;base64,@Model.Picture" alt="Photo de la carte">
 }
 else
 {
-    <img width="100" height="120" src="~/Content/Images/user.jpg" alt="Photo de la carte" />
+    <img width="75" height="90" src="~/Content/Images/user.jpg" alt="Photo de la carte" />
 }

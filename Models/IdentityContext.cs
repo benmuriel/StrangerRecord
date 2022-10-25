@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
@@ -25,7 +26,10 @@ namespace StrangerRecord.Models
         public virtual ICollection<Identification> Identifications { get; set; }
         public int centreId { get; set; }
         public string FullName { get; set; }
-
+        [NotMapped]
+        public string EtatCompte { get; }
+        public DateTime created_at { get; set; }
+        public virtual CentreEnregistrement Centre { get; set; }
     
     }
 
@@ -74,12 +78,15 @@ namespace StrangerRecord.Models
                 .WithRequired(e => e.Centre)
                 .HasForeignKey<int>(e => e.centre_id);
 
+     modelBuilder.Entity<CentreEnregistrement>()
+                .HasMany<ApplicationUser>(e => e.Users)
+                .WithRequired(e => e.Centre)
+                .HasForeignKey<int>(e => e.centreId);
+ 
             modelBuilder.Entity<ApplicationUser>()
                        .HasMany<Identification>(e => e.Identifications)
                        .WithRequired(e => e.Encodeur)
                        .HasForeignKey<string>(e => e.encodeur_id);
-
-
 
             //carte 
             modelBuilder.Entity<Commune>()

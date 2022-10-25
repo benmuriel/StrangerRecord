@@ -15,6 +15,8 @@ using StrangerRecord.Models.ViewModel;
 
 namespace StrangerRecord.Areas.Identification.Controllers
 {
+
+    [Authorize(Roles = "Encodeur")]
     public class RecordController : Controller
     {
        

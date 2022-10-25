@@ -1,0 +1,50 @@
+﻿@model IEnumerable<StrangerRecord.Models.ApplicationUser>
+@using StrangerRecord.Service;
+
+@{
+    ViewBag.Title = "Gestions des utilisateurs";
+}
+
+<h4 class="mt-4">@ViewBag.Title</h4>
+
+<div class="mt-1">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date d'enregistrement</th>
+                <th>Nom</th>
+                <th>Affectation</th>
+                <th>Roles</th>
+                <th>Etat du compte</th>
+                <th>
+                    <a href="@Url.Action("Register","User", new { area="Configuration"})" class="btn btn-primary"> Nouveau</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FullName</td>
+                    <td>@item.created_at.ToString()</td>
+                    <td>@item.UserName</td>
+                    <td>@item.Centre</td>
+                    <td>
+                        <ul>
+                            @foreach (var role in item.Roles)
+                            {
+                                <li>@DataProvider.GetRole(role.RoleId).Name</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>@item.EtatCompte</td>
+                    <td>
+                        <a href="@Url.Action("Details","User", new { id=item.Id, area="Configuration"})" class="btn btn-light"> Afficher</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

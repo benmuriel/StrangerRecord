@@ -4,7 +4,7 @@
 <div class="card mb-1">
     <div class="card-header">
         <div class="text-end float-end">
-            <a href="@Url.Action("Apercu","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Apperçu</a>
+            <a href="@Url.Action("Apercu","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Aperçu</a>
             @if (!Model.Archived)
             {
                 <a href="@Url.Action("Edit","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>

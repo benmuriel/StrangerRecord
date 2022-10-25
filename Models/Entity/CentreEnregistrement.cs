@@ -9,6 +9,12 @@ namespace StrangerRecord.Models.Entity
     [Table("centre")]
     public class CentreEnregistrement
     {
+        public CentreEnregistrement()
+        {
+            Identifications = new HashSet<Identification>();
+            Sejours = new HashSet<Sejour>();
+            Users = new HashSet<ApplicationUser>();
+        }
         public int id { get; set; }
         public string designation { get; set; }
         public string chef_centre { get; set; }
@@ -21,6 +27,7 @@ namespace StrangerRecord.Models.Entity
 
         public virtual ICollection<Identification> Identifications { get; set; }
         public virtual ICollection<Sejour> Sejours { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         public override string ToString()
         {

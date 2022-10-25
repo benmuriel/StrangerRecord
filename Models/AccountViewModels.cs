@@ -56,7 +56,7 @@ namespace StrangerRecord.Models
 
         [Display(Name = "Mémoriser le mot de passe ?")]
         public bool RememberMe { get; set; }
-       
+
         [Required]
         [Display(Name = "Nom d'utilisateur")]
         public string UserName { get; set; }
@@ -64,7 +64,7 @@ namespace StrangerRecord.Models
 
     public class RegisterViewModel
     {
-       
+
         [Required]
         [StringLength(100, ErrorMessage = "La chaîne {0} doit comporter au moins {2} caractères.", MinimumLength = 6)]
         [DataType(DataType.Password)]
@@ -76,9 +76,35 @@ namespace StrangerRecord.Models
         [Compare("Password", ErrorMessage = "Le mot de passe et le mot de passe de confirmation ne correspondent pas.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Le nom complet est obligqtoire.")] 
+        [Display(Name = "Nom complet")]
+        public string FullName { get; set; }
+        [Required(ErrorMessage = "Le mot d'utilisateur est obligatoire.")]
         [Display(Name = "Nom d'utilisateur")]
         public string UserName { get; set; }
+
+        [Required(ErrorMessage = "L'affectation est obligatoire.")]
+        [Display(Name = "Affectation")]
+        public int centreId { get; set; }
+
+
+    }
+      public class EditUserViewModel
+    {
+
+        public string Id { get; set; }
+        [Required(ErrorMessage = "Le nom complet est obligqtoire.")] 
+        [Display(Name = "Nom complet")]
+        public string FullName { get; set; }
+        [Required(ErrorMessage = "Le mot d'utilisateur est obligatoire.")]
+        [Display(Name = "Nom d'utilisateur")]
+        public string UserName { get; set; }
+
+        [Required(ErrorMessage = "L'affectation est obligatoire.")]
+        [Display(Name = "Affectation")]
+        public int centreId { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

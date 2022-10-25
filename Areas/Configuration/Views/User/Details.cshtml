@@ -1,0 +1,78 @@
+﻿@model StrangerRecord.Models.ApplicationUser
+@using StrangerRecord.Service;
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4 class="mt-4">@ViewBag.Title</h4>
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header ">
+                <a class="btn btn-outline-primary btn-sm m-1 float-end" href="@Url.Action("Edit", "User", new { area="Configuration", id = Model.Id })">Modifier</a>
+                <a class="btn btn-outline-primary btn-sm m-1 float-end" href="@Url.Action("Index", "User", new { area="Configuration", id = Model.Id })">Liste</a>
+                <h5 class="card-title">Utilasteur</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm table-striped">
+                    <tbody>
+                        <tr>
+                            <td>Création  </td>
+                            <td class="fw-bold">  @Model.created_at.ToString()</td>
+                        </tr>
+                        <tr>
+                            <td>Nom complet  </td>
+                            <td class="fw-bold">  @Model.FullName</td>
+                        </tr>
+                        <tr>
+                            <td>Nom d'utilisqteur</td>
+                            <td class="fw-bold">  @Model.UserName</td>
+                        </tr>
+                        <tr>
+                            <td>Affectation</td>
+                            <td class="fw-bold">  @Model.Centre</td>
+                        </tr>
+                        <tr>
+                            <td>Etat du compte</td>
+                            <td class="fw-bold">  </td>
+                        </tr>
+                        <tr>
+                            <td>Roles</td>
+                            <td class="fw-bold">
+                                <ul>
+                                    @foreach (var item in Model.Roles)
+                                    {
+                                        <li>@DataProvider.GetRole(item.RoleId).Name</li>
+                                    }
+                                </ul>
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+
+                <h5 class="card-title">Roles</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm table-striped">
+                    <tbody>
+                        @foreach (var item in DataProvider.Roles())
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    @Html.Action("HasRole", new { userid = Model.Id, role = item.Name })
+                                </td>
+                            </tr>
+                        }
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

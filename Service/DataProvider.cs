@@ -7,6 +7,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
+using Spire.Barcode;
+using System.IO;
+using System.Drawing;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace StrangerRecord.Service
 {
@@ -15,6 +19,8 @@ namespace StrangerRecord.Service
     public static class DataProvider
     {
         private static IdentityContext db = new IdentityContext();
+
+       
 
         public static List<SelectListItem> GenderFormChoiceList
         {
@@ -32,6 +38,15 @@ namespace StrangerRecord.Service
             return db.Identifications.Find(id);
         }
 
+        public static IdentityRole GetRole (string id)
+        {
+            return db.Roles.Find(id);
+        }
+
+        public static List<IdentityRole> Roles()
+        {
+            return db.Roles.ToList();
+        }
         internal static List<Carte> LoadCarteBy(string type, string q)
         {
             q = q.Trim().ToLower();
@@ -44,7 +59,7 @@ namespace StrangerRecord.Service
                         .Where(e => e.Identification.nom.Contains(q) || e.Identification.postenom.Trim().ToLower().Contains(q) || e.Identification.prenom.Trim().ToLower().Contains(q))
                         .OrderByDescending(e => e.created_at).Take(50).ToList();
                 case "numcarte":
-                    return db.Cartes.Include("Identification").Where(e => e.numero.Trim().ToLower() == q).OrderByDescending(e=>e.created_at).Take(50).ToList();
+                    return db.Cartes.Include("Identification").Where(e => e.numero.Trim().ToLower() == q).OrderByDescending(e => e.created_at).Take(50).ToList();
             }
             return null;
         }
@@ -74,7 +89,7 @@ namespace StrangerRecord.Service
                 Carte ancienne = Service.DataProvider.GetLastCarte(carte.identification_id);
                 if (ancienne != null)
                 {
-                    ancienne.archived_at = DateTime.Now; 
+                    ancienne.archived_at = DateTime.Now;
                 }
                 carte.date_delivrance = DateTime.Today;
                 carte.encodeur_id = CurrentUser.Id;
@@ -101,14 +116,14 @@ namespace StrangerRecord.Service
         internal static void SaveSejour(Sejour sejour)
         {
             if (FindSejourById(sejour.id) == null)
-            { 
+            {
                 // invalider l ancienne carte
 
                 Sejour ancienne = Service.DataProvider.GetLastSejour(sejour.carte_id);
                 if (ancienne != null)
                 {
                     ancienne.archived_at = DateTime.Now;
-                } 
+                }
                 sejour.encodeur_id = CurrentUser.Id;
                 sejour.centre_id = CurrentUser.centreId;
                 db.Sejours.Add(sejour);
@@ -118,7 +133,7 @@ namespace StrangerRecord.Service
 
         public static Carte FindCartById(string id)
         {
-            return db.Cartes.Include("Identification").Include("Commune").FirstOrDefault(d=>d.id == id);
+            return db.Cartes.Include("Identification").Include("Commune").FirstOrDefault(d => d.id == id);
         }
 
         public static List<SelectListItem> TypeVisaFormChoiceList
@@ -132,11 +147,20 @@ namespace StrangerRecord.Service
                 return listItems;
             }
         }
-        public static List<SelectListItem> TypePassportFormChoiceList
+        
+        public static List<SelectListItem> CentreFormChoiceList
         {
             get
-            {
-
+            { 
+                List<SelectListItem> listItems = new List<SelectListItem>();
+                db.CentreEnregistrements
+                    .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
+                return listItems;
+            }
+        }   public static List<SelectListItem> TypePassportFormChoiceList
+        {
+            get
+            { 
                 List<SelectListItem> listItems = new List<SelectListItem>();
                 db.TypePasseports
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
@@ -157,8 +181,8 @@ namespace StrangerRecord.Service
         public static Sejour GetLastSejour(string carteid)
         {
             db = new IdentityContext();
-            return db.Sejours.Include("Encodeur").Include("Centre").Include("Carte").OrderByDescending(e=>e.created_at)
-                .FirstOrDefault(e =>  e.carte_id == carteid);
+            return db.Sejours.Include("Encodeur").Include("Centre").Include("Carte").OrderByDescending(e => e.created_at)
+                .FirstOrDefault(e => e.carte_id == carteid);
         }
 
         public static string GetNewCarteNumero()
@@ -193,6 +217,39 @@ namespace StrangerRecord.Service
             db.SaveChanges();
         }
 
+        public static string BarcodeBare(string input)
+        {
+            BarCodeGenerator bg = new BarCodeGenerator(new BarcodeSettings
+            {
+                Type = BarCodeType.Code39,
+                Data = input,
+               // ShowText = true 
+        });
+            return "data:image/jpg;base64,"+ Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));
+        }
+        public static string BarcodeQr(string input)
+        {
+            BarCodeGenerator bg = new BarCodeGenerator(new BarcodeSettings
+            {
+                Type = BarCodeType.QRCode,
+                Data = input,
+                ShowText = false 
+        });
+            return "data:image/jpg;base64,"+ Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));
+        }
+        public static byte[] imageToByteArray(System.Drawing.Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+            return ms.ToArray();
+        }
+
+        public static Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
         //public static string UniqueRamdonString(string source, string serie)
         //{
         //    source = source.Trim().Replace(' ', 'W').ToUpper();

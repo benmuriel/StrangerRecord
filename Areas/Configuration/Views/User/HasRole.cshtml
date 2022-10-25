@@ -1,0 +1,7 @@
+﻿@model bool
+@{ 
+    Layout = null;
+}
+<a class="" href="@(Model?Url.Action("RetirerRole", new {role = ViewBag.Role, userid = ViewBag.userid  }):Url.Action("AjouterRole",new {role = ViewBag.Role, userid = ViewBag.userid }))">
+    @(Model?"Retirer":"Ajouter")
+</a>

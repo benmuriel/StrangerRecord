@@ -16,4 +16,32 @@
     white-space: normal;
 }
 
- 
+.carte-text {
+    font-size: .6em;
+}
+
+.carte-title {
+    font-size: .7em;
+}
+
+#carte {
+    background-image: url('Images/CarteBackGround.jpg');
+    background-color: wheat;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: black;
+    width: 8.5cm;
+    height: 5.5cm;
+}
+
+
+#carteback {
+    background-image: url('Images/CarteBackGroundBack.jpg');
+    background-color: wheat;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: black;
+    width: 8.5cm;
+    height: 5.5cm;
+}
+

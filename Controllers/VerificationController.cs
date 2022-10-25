@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace StrangerRecord.Controllers
 {
+    [Authorize(Roles = "Verificateur")]
     public class VerificationController : Controller
     {
         // GET: Recherche
