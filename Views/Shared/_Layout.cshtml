@@ -19,19 +19,41 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-        </li>*@
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown link
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>*@
                     <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Home", new {area="" })">Accueil</a> </li>
-                    <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Verification", new {area="" })">Verification</a> </li>
+                    @if (User.IsInRole("Encodeur"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Create","Record",new { area="Identification" })">Identification</a> </li>
+                    }
+                    @if (User.IsInRole("Verificateur"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Verification", new { area=""})">Vérification</a> </li>
+                    }
+                    @if (User.IsInRole("AlerteExpliration"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Default", new { area = "AlerteExpliration" })">Alerte d'expiration</a> </li>
+                    }
+                    @if (User.IsInRole("RapportIdentification"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Default",new { area="RapportIdentification" })">Rapport d'identification</a> </li>
+                    }
+                    @if (User.IsInRole("RapportDeplacement"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Default",new { area="RapportDeplacement" }):">Rapport de déplacement</a> </li>
+                    }
+                    @if (User.IsInRole("Configurateur"))
+                    {
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Default",new { area="Configuration" })">Configuration</a> </li>
+                    }
                     @* <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>*@
-
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -43,13 +65,13 @@
         {
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="alert alert-danger alert-dismissible m-1"  role="alert">
+                    <div class="alert alert-danger alert-dismissible m-1" role="alert">
                         <div> @TempData["ErrorMessage"]</div>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
             </div>
-        } 
+        }
         @RenderBody()
 
         <hr />
@@ -65,15 +87,18 @@
     <script type="text/javascript">
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
+            language:'fr'
             // startDate: '-d'
         });
         $('.datepickerafter').datepicker({
             format: 'dd/mm/yyyy',
-            startDate: '-d'
+            startDate: '-d',
+            language: 'fr'
         });
         $('.datepickerbefore').datepicker({
             format: 'dd/mm/yyyy',
-            endDate: '+d'
+            endDate: '+d',
+            language: 'fr'
         })
     </script>
 </body>

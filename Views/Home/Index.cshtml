@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Identification</h5>
                         <p class="card-text"> Indentification de nouvelles personnes. </p>
-                        <a href="@Url.Action("Create","Record",new { area="Identification" })" class="btn btn-primary w-100">Acceder &raquo;</a>
+                        <a href="@(User.IsInRole("Encodeur")?Url.Action("Create","Record",new { area="Identification" }):"#")" class="btn btn-@(User.IsInRole("Encodeur")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>
@@ -18,36 +18,37 @@
                     <div class="card-body">
                         <h5 class="card-title">Verification</h5>
                         <p class="card-text">Vérification des cartes, affichage et modification des informations.</p>
-                        <a href="@Url.Action("Index","Verification")" class="btn btn-primary w-100">Acceder &raquo;</a>
+
+                        <a href="@(User.IsInRole("Verificateur")?Url.Action("Index","Verification"):"#") " class="btn btn-@(User.IsInRole("Verificateur")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
+            </div>  <div class="col-md-4">
                 <div class="card" style="width: 18rem; height:11rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Deplacement</h5>
-                        <p class="card-text">Historique des déplacements  des personnes identifiées.</p>
-                        <a href="#" class="btn btn-light w-100">Acceder &raquo;</a>
+                        <h5 class="card-title">Alerte d'expiration</h5>
+                        <p class="card-text">Rapport d'expiration des cartes, passeports et visas.</p>
+                        <a href="@(User.IsInRole("AlerteExpliration")?Url.Action("Index","Default",new { area="AlerteExpliration" }):"#")" class="btn btn-@(User.IsInRole("AlerteExpliration")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>
+           
         </div>
         <div class="row mt-5">
             <div class="col-md-4">
                 <div class="card" style="width: 18rem; height:11rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Alerte d'expiration</h5>
-                        <p class="card-text">Rapport d'expiration des cartes, passeports et visas.</p>
-                        <a href="#" class="btn btn-light w-100">Acceder &raquo;</a>
+                        <h5 class="card-title">Rapport d'identification</h5>
+                        <p class="card-text"> Historique et liste d'enregistrement des personnes identifiées.</p>
+                        <a href="@(User.IsInRole("RapportIdentification")?Url.Action("Index","Default",new { area="RapportIdentification" }):"#") " class="btn btn-@(User.IsInRole("RapportFrequentation")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card" style="width: 18rem; height:11rem;">
                     <div class="card-body">
-                        <h5 class="card-title">Rapport de fréquentation</h5>
-                        <p class="card-text"> Historique et liste d'enregistrement des personnes.</p>
-                        <a href="@Url.Action("Index","Default",new { area="RapportFrequentation" })" class="btn btn-primary w-100">Acceder &raquo;</a>
+                        <h5 class="card-title">Rapport des Deplacements</h5>
+                        <p class="card-text">Historique des déplacements  des personnes identifiées.</p>
+                        <a href="@(User.IsInRole("RapportDeplacement")?Url.Action("Index","Default",new { area="RapportDeplacement" }):"#")" class="btn btn-@(User.IsInRole("RapportDeplacement")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>
@@ -55,8 +56,8 @@
                 <div class="card" style="width: 18rem; height:11rem;">
                     <div class="card-body">
                         <h5 class="card-title">Configuration</h5>
-                        <p class="card-text"> Enregistrement et configuration des prérequis: utilisateurs, etc.</p>
-                        <a href="@Url.Action("Index","Default",new { area="Configuration" })" class="btn btn-primary w-100">Acceder &raquo;</a>
+                        <p class="card-text"> Configuration de base: utilisateurs, centres d'identification, etc.</p>
+                        <a href="@(User.IsInRole("Configurateur")?Url.Action("Index","Default",new { area="Configuration" }):"#") " class="btn btn-@(User.IsInRole("Configurateur")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>

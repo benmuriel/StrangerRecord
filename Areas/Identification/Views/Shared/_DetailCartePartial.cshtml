@@ -3,13 +3,14 @@
 @using StrangerRecord.Models.ViewModel;
 <div class="card mb-1">
     <div class="card-header">
+       
         <div class="text-end float-end">
             <a href="@Url.Action("Apercu","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Aperçu</a>
-            @if (!Model.Archived)
+            @if (!Model.Archived && User.IsInRole("Encodeur"))
             {
                 <a href="@Url.Action("Edit","Carte", new { id=Model.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>
             }
-            @if (Model == DataProvider.GetLastCarte(Model.identification_id))
+            @if (Model == DataProvider.GetLastCarte(Model.identification_id) && User.IsInRole("Encodeur"))
             {
                 <a href="@Url.Action("Create","Carte", new { id= Model.identification_id, area="Identification"})" class="btn btn-outline-primary btn-sm">Renouveler</a>
             }
@@ -21,7 +22,7 @@
             <div class="col-4 text-center">
                 @Html.Partial("_PhotoLarge", new DisplayPhotoViewModel { Picture = Model.PictureString, PictureFormat = Model.picture_format  } )
                 <div class=" p-1">
-                    @if (!Model.Archived)
+                    @if (!Model.Archived && User.IsInRole("Encodeur"))
                     {
                         <a href="@Url.Action("UploadPicture","Carte", new { id=Model.id, area ="Identification" })" class="btn btn-outline-primary btn-sm">Envoyer</a>
                         <a href="@Url.Action("UploadPicture","Carte", new { id=Model.id, area ="Identification" })" class="btn btn-outline-primary btn-sm">Captuer</a>

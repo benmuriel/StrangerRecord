@@ -34,7 +34,9 @@
                         </tr>
                         <tr>
                             <td>Etat du compte</td>
-                            <td class="fw-bold">  </td>
+                            <td class="fw-bold">@Model.EtatCompte
+                                <a href="@Url.Action("LockAccount","User", new { id =Model.Id, area ="Configuration"})" class="float-end btn-sm btn btn-@(Model.IsLocked?"success":"danger")">@(Model.IsLocked?"Debloquer":"Bloquer")</a>
+                            </td>
                         </tr>
                         <tr>
                             <td>Roles</td>

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<StrangerRecord.Models.Entity.CentreEnregistrement>
+
+@{
+    ViewBag.Title = "Centre d'identification";
+}
+
+<h4 class="mt-3">@ViewBag.Title</h4>
+<a class="m-2" href="@Url.Action("Index","Default")">Accuiel</a>
+<table class="table table-striped">
+    <tr>
+        <th>
+            Ville
+        </th>
+        <th>
+            Centre
+        </th>
+        <th>
+            Chef de centre
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ville.designation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.designation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.chef_centre)
+            </td>
+            <td>
+            </td>
+        </tr>
+    }
+</table>

@@ -29,6 +29,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du visa est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateExpirationVisa { get; set; }
 
@@ -38,6 +39,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du passeport est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateExpirationPassePort { get; set; }
 
@@ -45,6 +47,7 @@ namespace StrangerRecord.Models.ViewModel
         // ---------------carte -------------------------
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration de la carte est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateExpirationCarte { get; set; }
 

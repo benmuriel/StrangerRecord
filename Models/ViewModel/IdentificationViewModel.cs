@@ -40,7 +40,9 @@ namespace StrangerRecord.Models.ViewModel
         [Display(Name = "Adresse mail")]
         public string ContactMail { get; set; }
 
-        [Display(Name = "Numero de telephone")]
+        [Display(Name = "Numero de téléphone nationale (avec +243)")]
+        [RegularExpression(@"^\+243(8[0-5]|9[0179])\d{7}$", ErrorMessage = "Numéro de téléphone non valide")]
+        [Required(ErrorMessage = "Le numéro de téléphone est obligatoire ")]
         public string ContactTelephone { get; set; }
 
 
@@ -50,6 +52,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'entrée en RDC (*)")]
         [Required(ErrorMessage = "La date d'entrée en RDC est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[RegularExpression("^([0-2][0-9]|(3)[0-1])(/)(((0)[0-9])|((1)[0-2]))(/)d{4}$",ErrorMessage ="Date non valide")]
         //[DataType(DataType.Date)]
         public string dateEntreeRdc { get; set; }
@@ -74,6 +77,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du visa est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateExpirationVisa { get; set; }
 
@@ -83,19 +87,16 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration du passeport est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateExpirationPassePort { get; set; }
 
 
-        // --------------- sejour ---------------------
-
-
-
-       
 
         //--------------- carte ---------------------
         [Display(Name = "Date d'expiration (*)")]
         [Required(ErrorMessage = "La date d'expiration de la carte est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateExpirationCarte { get; set; }
 

@@ -13,6 +13,7 @@
             <tr>
                 <th>#</th>
                 <th>Date d'enregistrement</th>
+                <th>Nom d'utilisateur</th>
                 <th>Nom</th>
                 <th>Affectation</th>
                 <th>Roles</th>
@@ -25,25 +26,26 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@item.FullName</td>
-                    <td>@item.created_at.ToString()</td>
-                    <td>@item.UserName</td>
-                    <td>@item.Centre</td>
-                    <td>
-                        <ul>
-                            @foreach (var role in item.Roles)
-                            {
-                                <li>@DataProvider.GetRole(role.RoleId).Name</li>
-                            }
-                        </ul>
-                    </td>
-                    <td>@item.EtatCompte</td>
-                    <td>
-                        <a href="@Url.Action("Details","User", new { id=item.Id, area="Configuration"})" class="btn btn-light"> Afficher</a>
+            <tr>
+                <td></td>
+                <td>@item.created_at.ToString()</td>
+                <td>@item.UserName</td>
+                <td>@item.FullName</td>
+                 <td>@item.Centre</td>
+                <td>
+                    <ul>
+                        @foreach (var role in item.Roles)
+                        {
+                            <li>@DataProvider.GetRole(role.RoleId).Name</li>
+                        }
+                    </ul>
+                </td>
+                <td>@item.EtatCompte</td>
+                <td>
+                    <a href="@Url.Action("Details","User", new { id=item.Id, area="Configuration"})" class="btn btn-outline-primary btn-sm"> Afficher</a>
 
-                    </td>
-                </tr>
+                </td>
+            </tr>
             }
         </tbody>
     </table>

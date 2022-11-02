@@ -27,6 +27,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date de naissance (*)")]
         [Required(ErrorMessage = "La date de naissance est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string date_naissance { get; set; }
 
@@ -42,7 +43,9 @@ namespace StrangerRecord.Models.ViewModel
         [Display(Name = "Adresse mail")]
         public string ContactMail { get; set; }
 
-        [Display(Name = "Numero de telephone")]
+        [RegularExpression(@"^\+243(8[0-5]|9[0179])\d{7}$", ErrorMessage = "Numéro de téléphone non valide")]
+        [Required(ErrorMessage = "Le numéro de téléphone est obligatoire ")]
+        [Display(Name = "Numero de telephone nationale (avec +243)")]
         public string ContactTelephone { get; set; }
 
 
@@ -52,6 +55,7 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "Date d'entrée en RDC (*)")]
         [Required(ErrorMessage = "La date d'entrée en RDC est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string dateEntreeRdc { get; set; }
     }

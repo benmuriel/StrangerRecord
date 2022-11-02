@@ -5,11 +5,11 @@
 <div class="card ">
     <div class="card-header">
         <div class="text-end float-end">
-            @if (lastsejour != null)
+            @if (lastsejour != null && User.IsInRole("Encodeur"))
             {
                 <a href="@Url.Action("Edit","Sejour", new { id=lastsejour.id, area="Identification"})" class="btn btn-outline-primary btn-sm mr-1 ">Modifier</a>
             }
-            @if (!Model.Archived)
+            @if (!Model.Archived && User.IsInRole("Encodeur"))
             {
                 <a href="@Url.Action("Create", "Sejour", new { id = Model.id, area = "Identification" })" class="btn btn-outline-primary btn-sm">Nouveau</a>
             }

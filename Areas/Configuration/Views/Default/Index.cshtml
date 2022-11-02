@@ -3,15 +3,24 @@
     ViewBag.Title = "Configuration";
 }
 
-<h4 class="mt-4">@ViewBag.Title</h4>
+<h4 class="mt-3">@ViewBag.Title</h4>
 <div class="container pt-4">
     <div class="row">
         <div class="col-md-4">
             <div class="card" style="width: 18rem; height:11rem;">
                 <div class="card-body">
                     <h5 class="card-title">Utilisateurs</h5>
-                    <p class="card-text"> Gestion des utilisateurs. </p>
+                    <p class="card-text"> Gestion des comptes et affectations utilisateurs. </p>
                     <a href="@Url.Action("Index","User",new { area="Configuration" })" class="btn btn-primary w-100">Acceder &raquo;</a>
+                </div>
+            </div>
+        </div> 
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem; height:11rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Centre d'identification</h5>
+                    <p class="card-text"> Affichage des centres d'identification </p>
+                    <a href="@Url.Action("Index","CentreIdentification",new { area="Configuration" })" class="btn btn-primary w-100">Acceder &raquo;</a>
                 </div>
             </div>
         </div> 

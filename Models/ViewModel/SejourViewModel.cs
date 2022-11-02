@@ -46,11 +46,13 @@ namespace StrangerRecord.Models.ViewModel
 
         [Display(Name = "A partir du (*)")]
         [Required(ErrorMessage = "La date de debut du sejour est obligatoire")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateDebutSejour { get; set; }
 
 
         [Display(Name = "Jusqu'au ")]
+        [RegularExpression(@"^(0[0-9]|1[0-9]|2[0-9]|3[0-1])/(0[0-9]|1[0-2])/(19|20)\d{2}$", ErrorMessage = "Date non valide")]
         //[DataType(DataType.Date)]
         public string DateFinSejour { get; set; }
 

@@ -20,7 +20,26 @@ namespace StrangerRecord.Service
     {
         private static IdentityContext db = new IdentityContext();
 
-       
+        public static string FormatPhoneNumber(string number)
+        {
+            string formated = "";
+
+            if (!String.IsNullOrEmpty(number) && number.Length == 13)
+            {
+                formated += number.Substring(0, 4) + " ";
+                formated += number.Substring(4, 2) + " ";
+                formated += number.Substring(6, 2) + " ";
+                formated += number.Substring(8, 2) + " ";
+                formated += number.Substring(10, 3) + " ";
+                return formated;
+            }
+            return number;
+        }
+
+        internal static List<CentreEnregistrement> LoadCentreIdentification()
+        {
+            return db.CentreEnregistrements.Include("ville").ToList();
+        }
 
         public static List<SelectListItem> GenderFormChoiceList
         {
@@ -38,7 +57,7 @@ namespace StrangerRecord.Service
             return db.Identifications.Find(id);
         }
 
-        public static IdentityRole GetRole (string id)
+        public static IdentityRole GetRole(string id)
         {
             return db.Roles.Find(id);
         }
@@ -112,6 +131,16 @@ namespace StrangerRecord.Service
                 return listItems;
             }
         }
+        public static List<SelectListItem> PaysFormChoiceList
+        {
+            get
+            {
+                List<SelectListItem> listItems = new List<SelectListItem>();
+                db.Pays
+                    .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id, Text = item.id }));
+                return listItems;
+            }
+        }
 
         internal static void SaveSejour(Sejour sejour)
         {
@@ -147,20 +176,21 @@ namespace StrangerRecord.Service
                 return listItems;
             }
         }
-        
+
         public static List<SelectListItem> CentreFormChoiceList
         {
             get
-            { 
+            {
                 List<SelectListItem> listItems = new List<SelectListItem>();
                 db.CentreEnregistrements
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
                 return listItems;
             }
-        }   public static List<SelectListItem> TypePassportFormChoiceList
+        }
+        public static List<SelectListItem> TypePassportFormChoiceList
         {
             get
-            { 
+            {
                 List<SelectListItem> listItems = new List<SelectListItem>();
                 db.TypePasseports
                     .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item.id.ToString(), Text = item.ToString() }));
@@ -223,9 +253,9 @@ namespace StrangerRecord.Service
             {
                 Type = BarCodeType.Code39,
                 Data = input,
-               // ShowText = true 
-        });
-            return "data:image/jpg;base64,"+ Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));
+                // ShowText = true 
+            });
+            return "data:image/jpg;base64," + Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));
         }
         public static string BarcodeQr(string input)
         {
@@ -233,9 +263,9 @@ namespace StrangerRecord.Service
             {
                 Type = BarCodeType.QRCode,
                 Data = input,
-                ShowText = false 
-        });
-            return "data:image/jpg;base64,"+ Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));
+                ShowText = false
+            });
+            return "data:image/jpg;base64," + Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));
         }
         public static byte[] imageToByteArray(System.Drawing.Image imageIn)
         {

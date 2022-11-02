@@ -1,5 +1,5 @@
 ﻿@model StrangerRecord.Models.Entity.Identification 
-
+@using StrangerRecord.Service;
 
 <div class="card">
     <div class="card-header">
@@ -40,7 +40,7 @@
                 </tr>
                 <tr>
                     <td>Contact Telephone</td>
-                    <td class="fw-bold">  @Model.contact_telephone</td>
+                    <td class="fw-bold">  @DataProvider.FormatPhoneNumber(Model.contact_telephone)</td>
                 </tr>
             </tbody>
         </table> 

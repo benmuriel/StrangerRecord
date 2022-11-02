@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace StrangerRecord.Areas.Configuration.Controllers
 {
-    [Authorize (Roles = "Configurateur")]
+    [Authorize(Roles = "Configurateur")]
     public class UserController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -57,6 +57,18 @@ namespace StrangerRecord.Areas.Configuration.Controllers
         {
             UserManager.RemoveFromRole(userid, role);
             return RedirectToAction("Details", "User", new { id = userid, area = "Configuration" });
+        }
+        public ActionResult LockAccount(string id)
+        {
+            ApplicationUser user = UserManager.FindById(id);
+            if (user != null)
+            {
+                if (user.LockoutEndDateUtc == null)
+                    user.LockoutEndDateUtc = DateTime.Now.AddYears(100);
+                else user.LockoutEndDateUtc = null;
+                UserManager.Update(user);
+            }
+            return RedirectToAction("Details", "User", new { id = id, area = "Configuration" });
         }
         // GET: Configuration/User
 

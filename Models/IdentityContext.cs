@@ -27,7 +27,18 @@ namespace StrangerRecord.Models
         public int centreId { get; set; }
         public string FullName { get; set; }
         [NotMapped]
-        public string EtatCompte { get; }
+        public string EtatCompte { get {
+                return this.LockoutEndDateUtc != null ? "Bloqué" : "Actif";
+            }
+        }
+
+        public bool IsLocked
+        {
+            get
+            {
+                return this.LockoutEndDateUtc != null;
+            }
+        }
         public DateTime created_at { get; set; }
         public virtual CentreEnregistrement Centre { get; set; }
     
@@ -38,6 +49,7 @@ namespace StrangerRecord.Models
 
     public class IdentityContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Pays> Pays { get; set; }
         public DbSet<Commune> Communes { get; set; }
         public DbSet<Ville> Villes { get; set; }
         public DbSet<Sejour> Sejours { get; set; }

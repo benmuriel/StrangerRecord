@@ -20,7 +20,7 @@ namespace StrangerRecord
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js","~/Scripts/bootstrap-datepicker.js","~/Scripts/dom-to-image.js"));
+                      "~/Scripts/bootstrap.js","~/Scripts/bootstrap-datepicker.min.js","~/Scripts/locales/bootstrap-datepicker.fr.min.js","~/Scripts/dom-to-image.js"));
 
             bundles.Add(new Bundle("~/Content/css").Include(
                       "~/Content/bootstrap.css","~/Content/bootstrap-datepicker.css",
