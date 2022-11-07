@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Alerte d'expiration</h5>
                         <p class="card-text">Rapport d'expiration des cartes, passeports et visas.</p>
-                        <a href="@(User.IsInRole("AlerteExpliration")?Url.Action("Index","Default",new { area="AlerteExpliration" }):"#")" class="btn btn-@(User.IsInRole("AlerteExpliration")?"primary":"light") w-100">Acceder &raquo;</a>
+                        <a href="@(User.IsInRole("AlertExpiration")?Url.Action("Index","Default",new { area="AlerteExpiration" }):"#")" class="btn btn-@(User.IsInRole("AlertExpiration")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Rapport d'identification</h5>
                         <p class="card-text"> Historique et liste d'enregistrement des personnes identifiées.</p>
-                        <a href="@(User.IsInRole("RapportIdentification")?Url.Action("Index","Default",new { area="RapportIdentification" }):"#") " class="btn btn-@(User.IsInRole("RapportFrequentation")?"primary":"light") w-100">Acceder &raquo;</a>
+                        <a href="@(User.IsInRole("RapportIdentification")?Url.Action("Index","Default",new { area="RapportIdentification" }):"#") " class="btn btn-@(User.IsInRole("RapportIdentification")?"primary":"light") w-100">Acceder &raquo;</a>
                     </div>
                 </div>
             </div>
@@ -64,3 +64,4 @@
 
         </div>
     </div>
+ 

@@ -141,6 +141,17 @@ namespace StrangerRecord.Service
                 return listItems;
             }
         }
+        
+        public static List<SelectListItem> PaysUsedFormChoiceList
+        {
+            get
+            {
+                List<SelectListItem> listItems = new List<SelectListItem>();
+                db.Identifications.Select(e=>e.pays_origine).Distinct().OrderBy(e=>e)  
+                    .ToList().ForEach(item => listItems.Add(new SelectListItem { Value = item, Text = item }));
+                return listItems;
+            }
+        }
 
         internal static void SaveSejour(Sejour sejour)
         {

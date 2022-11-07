@@ -40,6 +40,13 @@ namespace StrangerRecord.Models.Entity
         public virtual ApplicationUser Encodeur { get; set; } 
         public virtual ICollection<Carte> Cartes { get; set; }
 
+        public Carte CurrentCarte
+        {
+            get
+            {
+                return this.Cartes.FirstOrDefault(e => !e.Archived);
+            }
+        }
         public override string ToString()
         {
             return this.nom + " " + this.postenom + " " + this.prenom;

@@ -188,6 +188,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\AlerteExpiration\AlerteExpirationAreaRegistration.cs" />
+    <Compile Include="Areas\AlerteExpiration\Controllers\DefaultController.cs" />
     <Compile Include="Areas\Configuration\ConfigurationAreaRegistration.cs" />
     <Compile Include="Areas\Configuration\Controllers\CentreIdentificationController.cs" />
     <Compile Include="Areas\Configuration\Controllers\DefaultController.cs" />
@@ -203,8 +205,8 @@
     <Compile Include="Areas\Identification\Views\Report\CarteViewer.aspx.designer.cs">
       <DependentUpon>CarteViewer.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\RapportFrequentation\Controllers\DefaultController.cs" />
-    <Compile Include="Areas\RapportFrequentation\RapportFrequentationAreaRegistration.cs" />
+    <Compile Include="Areas\RapportIdentification\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\RapportIdentification\RapportIdentificationAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -332,9 +334,9 @@
     <Content Include="Areas\Identification\Views\Carte\Details.cshtml" />
     <Content Include="Areas\Identification\Views\Shared\_DetailIdentificationPartial.cshtml" />
     <Content Include="Areas\Identification\Views\Carte\UploadPicture.cshtml" />
-    <Content Include="Areas\RapportFrequentation\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\RapportFrequentation\Views\web.config" />
-    <Content Include="Areas\RapportFrequentation\Views\Default\Index.cshtml" />
+    <Content Include="Areas\RapportIdentification\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\RapportIdentification\Views\web.config" />
+    <Content Include="Areas\RapportIdentification\Views\Default\Index.cshtml" />
     <Content Include="Areas\Configuration\Views\web.config" />
     <Content Include="Areas\Configuration\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Configuration\Views\Default\Index.cshtml" />
@@ -343,6 +345,10 @@
     <Content Include="Areas\Configuration\Views\User\HasRole.cshtml" />
     <Content Include="Areas\Configuration\Views\User\Edit.cshtml" />
     <Content Include="Areas\Configuration\Views\CentreIdentification\Index.cshtml" />
+    <Content Include="Areas\AlerteExpiration\Views\Default\Index.cshtml" />
+    <Content Include="Areas\AlerteExpiration\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\AlerteExpiration\Views\web.config" />
+    <Content Include="Areas\AlerteExpiration\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -386,10 +392,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\AlerteExpiration\Models\" />
     <Folder Include="Areas\Configuration\Models\" />
-    <Folder Include="Areas\RapportFrequentation\Views\Shared\" />
+    <Folder Include="Areas\RapportIdentification\Views\Shared\" />
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

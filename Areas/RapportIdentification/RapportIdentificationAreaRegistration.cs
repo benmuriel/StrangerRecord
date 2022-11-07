@@ -4,24 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace StrangerRecord.Areas.RapportFrequentation
+namespace StrangerRecord.Areas.RapportIdentification
 {
      
-        public class RapportFrequentationAreaRegistration : AreaRegistration
+        public class RapportIdentificationAreaRegistration : AreaRegistration
         {
             public override string AreaName
             {
                 get
                 {
-                    return "RapportFrequentation";
+                    return "RapportIdentification";
                 }
             }
 
             public override void RegisterArea(AreaRegistrationContext context)
             {
                 context.MapRoute(
-                    "RapportFrequentation_default",
-                    "RapportFrequentation/{controller}/{action}/{id}",
+                    "RapportIdentification_default",
+                    "RapportIdentification/{controller}/{action}/{id}",
                     new { action = "Index", id = UrlParameter.Optional }
                 );
             }

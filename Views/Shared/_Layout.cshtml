@@ -37,9 +37,9 @@
                     {
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Index","Verification", new { area=""})">Vérification</a> </li>
                     }
-                    @if (User.IsInRole("AlerteExpliration"))
+                    @if (User.IsInRole("AlertExpiration"))
                     {
-                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Default", new { area = "AlerteExpliration" })">Alerte d'expiration</a> </li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Default", new { area = "AlerteExpiration" })">Alerte d'expiration</a> </li>
                     }
                     @if (User.IsInRole("RapportIdentification"))
                     {
@@ -83,11 +83,10 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
     <script type="text/javascript">
         $('.datepicker').datepicker({
             format: 'dd/mm/yyyy',
-            language:'fr'
+            language: 'fr'
             // startDate: '-d'
         });
         $('.datepickerafter').datepicker({
@@ -101,5 +100,7 @@
             language: 'fr'
         })
     </script>
+    
+    @RenderSection("scripts", required: false)
 </body>
 </html>

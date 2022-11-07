@@ -1,0 +1,158 @@
+﻿@model IEnumerable<StrangerRecord.Models.Entity.Carte>
+
+
+@{
+    ViewBag.Title = "Alertes d'expiration";
+}
+
+<div class="p-3">
+    <h4>@ViewBag.Title</h4>
+
+    @using (Html.BeginForm("Index", "Default", FormMethod.Get))
+    {
+<div class="row justify-content-center mt-3">
+    <div class="col-1">
+        <a class="m-2" href="@Url.Action("Index","Home")">Accueil</a>
+    </div>
+
+    <div class="col-2">
+        <select name="type" id="typeCbx" class="form-select">
+            <option value="Carte" @( ViewBag.type == "Carte" ? "selected" : "")>De la carte</option>
+            <option value="Passport" @( ViewBag.type == "Passport" ? "selected" : "")>Du passport</option>
+            <option value="Visa" @( ViewBag.type == "Visa" ? "selected" : "")>Du visa</option>
+        </select>
+    </div>
+    <div class="col-1 fw-bold p-1">
+        echéance
+    </div>
+    <div class="col-2">
+        <select name="echeance" id="echeanceCbx" class="form-select">
+            <option value="perso" title="Echéance personnalisée" @( ViewBag.echeance == "perso" ? "selected" : "")>personnalisée</option>
+            <option value="unMois" title="Expire dans un mois" @( ViewBag.echeance == "unMois" ? "selected" : "")> de 1 Mois</option>
+            <option value="troisMois" title="Expire dans trois mois" @( ViewBag.echeance == "troisMois" ? "selected" : "")> de 3 Mois </option>
+            <option value="sixMois" title="Expire dans six mois" @( ViewBag.echeance == "sixMois" ? "selected" : "")> de 6 Mois</option>
+        </select>
+    </div>
+    <div class="col-2">
+        <input name="dateDebut" id="dateDebutTxt" value="@ViewBag.dateDebut" type="text" class="form-control datepicker" placeholder="Date début" />
+    </div>
+    <div class="col-2">
+        <input name="dateFin" id="dateFinTxt" value="@ViewBag.dateFin" type="text" class="form-control datepicker" placeholder="Date fin" />
+    </div>
+
+    <div class="col-1">
+        <button type="submit" id="submitBtn" class="btn btn-primary">Verifier</button>
+    </div>
+</div>
+    }
+
+    <div style="overflow: scroll; height: 500px;" class="mt-1">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Numero de la carte</th>
+                    <th>Detenteur</th>
+                    <th>Pays d'origine</th>
+                    <th>Passeport</th>
+                    <th>Visa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() > 0)
+                {
+                    int i = 0;
+                    foreach (var item in Model)
+                    {
+
+                        <tr>
+                            <td>@{i++; } @i </td>
+                            <td>
+                                <strong> @item.numero</strong>  <!-- @Html.Partial("_ArchiveEtat", item.Archived) -->
+                                @if (!item.Archived) { Html.Partial("_ExpirationEtat", item.Expired); }
+                                <div title="Date d'expiration" class="small">Exp : @item.date_expiration.ToString("dd/MM/yyyy")</div>
+                            </td>
+                            <td>@item.Identification.ToString()  </td>
+                            <td>@item.Identification.pays_origine - @item.Identification.ville_pays_origine</td>
+                            <td>
+                                <strong> @item.passeport_numero  </strong>  <!-- @Html.Partial("_ExpirationEtat", item.PassePortExpired) -->
+                                <div title="Date d'expiration" class="small">Exp : @item.passeport_exp_date.ToString("dd/MM/yyyy")</div>
+                            </td>
+                            <td>
+                                <strong> @item.visa_numero  </strong>
+                                <div title="Date d'expiration" class="small">Exp : @item.visa_exp_date.ToString("dd/MM/yyyy")</div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-center fw-bold text-danger" colspan="8">
+                            Aucun resultat
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        function pad(n) {
+            return n < 10 ? "0" + n : n;
+        }
+
+        function addDays(n) {
+            var date = new Date();
+            date.setDate(date.getDate() + n);
+            var d = pad(date.getDate());
+            var m = pad(date.getMonth() + 1);
+            var y = date.getFullYear();
+            return d + "/" + m + "/" + y;
+        }
+        $('#echeanceCbx').on('change', function (e) {
+
+            if (this.value == "unMois") {
+
+                $("#dateDebutTxt").val(addDays(0));
+                $("#dateFinTxt").val(addDays(30));
+                $("#submitBtn").click();
+            }
+            if (this.value == "troisMois") {
+                $("#dateDebutTxt").val(addDays(0));
+                $("#dateFinTxt").val(addDays(60));
+                $("#submitBtn").click();
+            }
+            if (this.value == "sixMois") {
+                $("#dateDebutTxt").val(addDays(0));
+                $("#dateFinTxt").val(addDays(120));
+                $("#submitBtn").click();
+            }
+            if (this.value == "perso") {
+                $("#dateDebutTxt").val(null);
+                $("#dateFinTxt").val(null);
+                $("#submitBtn").click();
+            }
+        });
+
+        $('#typeCbx').on('change', function (e) {
+
+
+            if ($('#echeanceCbx').val() == "unMois") {
+                $("#submitBtn").click();
+            }
+
+            if ($('#echeanceCbx').val() == "troisMois") {
+                $("#submitBtn").click();
+            }
+
+            if ($('#echeanceCbx').val() == "sixMois") {
+                $("#submitBtn").click();
+            }
+
+        });
+    </script>
+}

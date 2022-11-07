@@ -1,0 +1,83 @@
+﻿@model IEnumerable<StrangerRecord.Models.Entity.Carte>
+@using StrangerRecord.Service;
+
+@{
+    ViewBag.Title = "Rapport d'Identification";
+}
+
+<h5 class="mt-3">@ViewBag.Title</h5>
+@using (Html.BeginForm("Index", "Default", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col">
+            <select name="mode" class="form-select">
+                <option value="enreg" @( ViewBag.mode == "enreg" ? "selected" : "")>Par date d'enregistrement </option>
+                <option value="rdc" @( ViewBag.mode == "rdc" ? "selected" : "")>Par date d'entrée en RDC </option>
+            </select>
+        </div>
+        <div class="col-2 ">
+            <input name="start" value="@ViewBag.start" type="text" class="form-control datepicker" readonly />
+        </div>
+        <div class="col-2 ">
+            <input name="end" value="@ViewBag.end" type="text" class="form-control datepicker" readonly />
+        </div>
+        <div class="col">
+            <select name="country" class="form-select">
+                <option value="">- Pays d'origine -</option>
+                @foreach (var item in DataProvider.PaysUsedFormChoiceList)
+                {
+                    <option value="@item.Value" @( ViewBag.country == item.Value ? "selected" : "")> @item.Text</option>
+                }
+
+            </select>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-outline-primary"> Afficher</button>
+        </div>
+    </div>
+}
+
+<div style="overflow: scroll; height: 500px;" class="mt-1">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Enregistrement</th>
+                <th>Nom</th>
+                <th>Genre</th>
+                <th>Origine</th>
+                <th>Entrée en RDC</th>
+                <th>Adresse actuelle</th>
+                <th>Carte (en cours)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                int i = 0;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@{i++; } @i </td>
+                        <td class="@( ViewBag.mode == "enreg" ? "fw-bold fs-italic" : "")">@item.Identification.created_at.ToString("dd/MM/yyyy")</td>
+                        <td>@item.Identification.ToString()</td>
+                        <td>@item.Identification.genre</td>
+                        <td>@item.Identification.pays_origine - @item.Identification.ville_pays_origine  </td>
+                        <td class="@( ViewBag.mode == "rdc" ? "fw-bold fs-italic" : "")">@item.Identification.date_entree_rdc.ToString("dd/MM/yyyy")</td>
+                        <td>@item.FullAdresse</td>
+                        <td><a class="fw-bold" target="_blank" href="@Url.Action("Details", "Carte", new { id = item.id, area = "Identification" })">@item.numero</a></td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-center fw-bold text-danger" colspan="8">
+                        Aucun resultat
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+  <div class="small">@Model.Count() element(s)</div>
