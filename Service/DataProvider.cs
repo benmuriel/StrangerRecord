@@ -273,7 +273,9 @@ namespace StrangerRecord.Service
             BarCodeGenerator bg = new BarCodeGenerator(new BarcodeSettings
             {
                 Type = BarCodeType.QRCode,
-                Data = input,
+                Data = input, 
+                ImageHeight =600, 
+                ImageWidth = 600,
                 ShowText = false
             });
             return "data:image/jpg;base64," + Convert.ToBase64String(imageToByteArray(bg.GenerateImage()));

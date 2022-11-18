@@ -8,38 +8,38 @@
 
 <span class="d-none" id="filename">@Model.numero - @Model.Identification.ToString()</span>
 <div class="row justify-content-center mt-3">
-    <div class="col-md-5">
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header"><h5>@ViewBag.Title</h5></div>
             <div class="card-body">
                 <div class="row justify-content-center">
                     <div class="col-12 border-1" id="carte">
-                        <div class="carte-title">
+                        <div class="carte-text ">
                             <div class="fw-bold text-center ">REPUBLIQUE DEMOCRATIQUE DU CONGO</div>
                             <div class="text-center fw-bold">
                                 PROVINCE DU HAUT-KATANGA
                             </div>
                         </div>
-                        <div class="text-center mt-1 carte-text fw-bold small">
+                        <div class="text-center mt-3 carte-text fw-bold bg-warning">
                             CARTE D'IDENTITE POUR ETRANGER
                         </div>
 
-                        <div class="row  carte-text ">
+                        <div class="row  carte-text mt-5">
                             <div class="col-3 text-center">
-                                @Html.Partial("_PhotoSmall", new DisplayPhotoViewModel { Picture = Model.PictureString, PictureFormat = Model.picture_format })
+                                @Html.Partial("_PhotoLarge", new DisplayPhotoViewModel { Picture = Model.PictureString, PictureFormat = Model.picture_format })
 
                             </div>
-                            <div class="col-9">
+                            <div class="col-9" id="cartebody">
                                 <div>
                                     Nom : <strong>@Model.Identification.nom</strong>
                                     <div class="float-end text-end">
-                                        <div class=" fw-bold">NO: @Model.numero</div>
+                                        <div class="bg-primary p-1 text-white fw-bold">ID : @Model.numero</div>
                                         <span>Sexe : <strong>@Model.Identification.genre</strong></span>
                                     </div>
                                 </div>
                                 <div>Postnom/Prénom : <strong>@(Model.Identification.postenom != null? Model.Identification.postenom+" " : "") @Model.Identification.prenom</strong></div>
                                 <div>Date de naissance : <strong>@Model.Identification.date_naissance.ToString("dd/MM/yyyy")</strong> </div>
-                                <div>Profession : <strong>@Model.Identification.profession</strong></div>
+                                <div>Proféssion : <strong>@Model.Identification.profession</strong></div>
                                 <div>Adresse : <strong>@Model.FullAdresse</strong> </div>
 
                                 <div class="mt-1">Origine : <strong>@Model.Identification.pays_origine - @Model.Identification.ville_pays_origine</strong> </div>
@@ -61,13 +61,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center mt-3">
                     <div class="col-12 border-1" id="carteback"> 
                         <div class="text-center">
-                            <div class="carte-title fw-bold bg-warning mt-1 p-1 ">GOUVERMENENT PROVINCIAL DU HAUT-KATANGA</div>
+                            <div class="carte-text fw-bold bg-warning mt-1 p-1 ">GOUVERMENENT PROVINCIAL DU HAUT-KATANGA</div>
                             <div class="text-center carte-text">Cette carte est exclussivement destinée à l'usage des personnes étrangères vivant dans la Province du Haut-Katanga</div>
                             <br />
-                            <img height="100" width="100" src="@DataProvider.BarcodeQr(Model.id)" alt="barecode">
+                            <img style="margin-top:5.5cm;" src="@DataProvider.BarcodeQr("http://192.168.24.5/cartestrangeridcheck/Home/Carte?id="+Model.id)" alt="barecode">
+                            @*height="200" width="200"*@
                         </div> 
                     </div>
                 </div> 

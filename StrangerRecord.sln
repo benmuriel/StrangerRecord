@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrangerRecord", "StrangerR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarteService", "..\CarteService\CarteService.csproj", "{0C8CE320-5308-4ADE-96B9-931331CDC74D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarteServiceControlSite", "..\CarteServiceControlSite\CarteServiceControlSite.csproj", "{1D4FD242-9091-41A6-AE32-62479AA20006}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0C8CE320-5308-4ADE-96B9-931331CDC74D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C8CE320-5308-4ADE-96B9-931331CDC74D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C8CE320-5308-4ADE-96B9-931331CDC74D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D4FD242-9091-41A6-AE32-62479AA20006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4FD242-9091-41A6-AE32-62479AA20006}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4FD242-9091-41A6-AE32-62479AA20006}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4FD242-9091-41A6-AE32-62479AA20006}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

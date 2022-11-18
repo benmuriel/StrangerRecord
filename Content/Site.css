@@ -24,24 +24,44 @@
     font-size: .7em;
 }
 
+ 
+
+
+.carte-text {
+    font-size: 1.4em;
+}
+
+.carte-title {
+    font-size: 1em;
+    padding: 5px 3px;
+}
+
+#cartebody {
+    height: 7.5cm;
+}
+
 #carte {
     background-image: url('Images/CarteBackGround.jpg');
     background-color: wheat;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat;*/
     background-size: cover;
+    /*  background-size: 8.5cm 5.5cm;*/
+    padding-top: 1.5cm;
+    /*  padding-left: 5px;*/
     color: black;
-    width: 8.5cm;
-    height: 5.5cm;
+    width: 1004px;
+    height: 628px;
 }
 
-
 #carteback {
+    /*  padding-top: 4em;
+    padding-left: 5px;*/
+    color: black;
+    color: black;
+    width: 1004px;
+    height: 628px;
     background-image: url('Images/CarteBackGroundBack.jpg');
     background-color: wheat;
     background-repeat: no-repeat;
-    background-size: cover;
-    color: black;
-    width: 8.5cm;
-    height: 5.5cm;
 }
-
+ 
